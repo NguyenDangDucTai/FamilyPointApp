@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         fontSize:25,
         fontWeight:'bold',
         color:'white',
-        left:60,
+        left:75,
     },
     box:{
         width:'300px',
