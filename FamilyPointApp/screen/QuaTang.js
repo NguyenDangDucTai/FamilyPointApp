@@ -63,7 +63,8 @@ export default function QuaTang({navigation}){
                                 </View>
                             </View>
                         )
-                    }}/>
+                    }}
+                />
             </View>
         </View>
     )
