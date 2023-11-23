@@ -10,10 +10,12 @@ export default function CaiDat(){
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
-                <TouchableOpacity style={{justifyContent:'center', width:'50px'}}>
+                <TouchableOpacity style={{width:'50px',position:'absolute', top:28}}>
                     <Icon name='arrow-left' size={30} color='white'/>
                 </TouchableOpacity>
-                <Text style={styles.textCaiDat}>CÀI ĐẶT</Text>
+                <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
+                    <Text style={styles.textCaiDat}>THÔNG BÁO</Text>
+                </View>
             </View>
             <View style={styles.body2}>
                 <View style={styles.box}>
@@ -72,13 +74,14 @@ const styles = StyleSheet.create({
         height:'100%'
     },
     body1:{
-        flex:1,
         backgroundColor:'#008CD7',
         borderBottomRightRadius:50,
         borderBottomLeftRadius:50,
         paddingHorizontal:20,
         paddingVertical:10,
         flexDirection:'row',
+        width:'100%',
+        height:80,
     },
     body2:{
         flex:5,
@@ -90,11 +93,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     textCaiDat:{
-        alignSelf:'center',
         fontSize:25,
         fontWeight:'bold',
         color:'white',
-        left:75,
     },
     box:{
         width:'300px',
