@@ -10,13 +10,15 @@ import HoTro from "./screen/HoTro";
 import MyId from "./screen/MyId";
 import ThuThach from "./screen/Thử thách";
 import LichSuDiem from "./screen/LichSuDiem";
+import ThongBao from "./screen/ThongBao";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LichSuDiem">
+      <Stack.Navigator initialRouteName="ThongBao">
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
+        <Stack.Screen name='ThongBao' component={ThongBao} options={{ headerShown: false }}/>
         <Stack.Screen name='LichSuDiem' component={LichSuDiem} options={{ headerShown: false }}/>
         <Stack.Screen name='ThuThach' component={ThuThach} options={{ headerShown: false }}/>
         <Stack.Screen name='HoTro' component={HoTro} options={{ headerShown: false }}/>
