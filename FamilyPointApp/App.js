@@ -15,6 +15,7 @@ import DangKy from './screen/DangKy';
 import QuenMaPin from './screen/QuenMaPin';
 import DoiMaPin from './screen/DoiMaPin';
 import ThongTinCaNhan from './screen/ThongTinCaNhan';
+import TrangChu from "./screen/TrangChu";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Screen name='DangKy' component={DangKy} options={{ headerShown: false }}/>
         <Stack.Screen name='QuenMaPin' component={QuenMaPin} options={{ headerShown: false }}/>
         <Stack.Screen name='DoiMaPin' component={DoiMaPin} options={{ headerShown: false }}/>
+        <Stack.Screen name='TrangChu' component={TrangChu} options={{ headerShown: false }}/>
         <Stack.Screen name='ThongTinCaNhan' component={ThongTinCaNhan} options={{ headerShown: false }}/>
         <Stack.Screen name='ThongBao' component={ThongBao} options={{ headerShown: false }}/>
         <Stack.Screen name='LichSuDiem' component={LichSuDiem} options={{ headerShown: false }}/>
