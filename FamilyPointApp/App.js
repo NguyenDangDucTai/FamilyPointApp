@@ -11,15 +11,21 @@ import MyId from "./screen/MyId";
 import ThuThach from "./screen/Thử thách";
 import LichSuDiem from "./screen/LichSuDiem";
 import ThongBao from "./screen/ThongBao";
-import TrangChu from "./screen/TrangChu";
+import DangKy from './screen/DangKy';
+import QuenMaPin from './screen/QuenMaPin';
+import DoiMaPin from './screen/DoiMaPin';
+import ThongTinCaNhan from './screen/ThongTinCaNhan';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TrangChu">
+      <Stack.Navigator initialRouteName="ThongTinCaNhan">
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
-        <Stack.Screen name='TrangChu' component={TrangChu} options={{ headerShown: false }}/>
+        <Stack.Screen name='DangKy' component={DangKy} options={{ headerShown: false }}/>
+        <Stack.Screen name='QuenMaPin' component={QuenMaPin} options={{ headerShown: false }}/>
+        <Stack.Screen name='DoiMaPin' component={DoiMaPin} options={{ headerShown: false }}/>
+        <Stack.Screen name='ThongTinCaNhan' component={ThongTinCaNhan} options={{ headerShown: false }}/>
         <Stack.Screen name='ThongBao' component={ThongBao} options={{ headerShown: false }}/>
         <Stack.Screen name='LichSuDiem' component={LichSuDiem} options={{ headerShown: false }}/>
         <Stack.Screen name='ThuThach' component={ThuThach} options={{ headerShown: false }}/>
