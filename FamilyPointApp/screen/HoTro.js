@@ -6,10 +6,12 @@ export default function HoTro({navigation}){
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
-                <TouchableOpacity style={{justifyContent:'center', width:'50px'}}>
+                <TouchableOpacity style={{width:'50px',position:'absolute', top:28}}>
                     <Icon name='arrow-left' size={30} color='white'/>
                 </TouchableOpacity>
-                <Text style={styles.textHoTro}>HỖ TRỢ</Text>
+                <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
+                    <Text style={styles.textHoTro}>HỖ TRỢ</Text>
+                </View>
             </View>
             {/*Body 2*/}
             <View style={styles.body2}>
@@ -101,13 +103,14 @@ const styles = StyleSheet.create({
         height:'100%'
     },
     body1:{
-        flex:1,
         backgroundColor:'#008CD7',
         borderBottomRightRadius:50,
         borderBottomLeftRadius:50,
         paddingHorizontal:20,
         paddingVertical:10,
         flexDirection:'row',
+        width:'100%',
+        height:80,
     },
     body2:{
         flex:9,
@@ -115,11 +118,9 @@ const styles = StyleSheet.create({
         paddingVertical:15,
     },
     textHoTro:{
-        alignSelf:'center',
         fontSize:25,
         fontWeight:'bold',
         color:'white',
-        left:75,
     },
     box1:{
         width:'300px',
