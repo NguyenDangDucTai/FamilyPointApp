@@ -2,8 +2,33 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useState, useEffect, useCallback } from "react";
 
 export default function Login({ navigation }) {
+
+    const [user, setuser] = useState([]);
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [check, setCheck] = useState(false);
+
+    useEffect(() => {
+        fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
+            .then((response) => response.json())
+            .then((json) => {
+                setuser(json);
+            });
+    }, []);
+
+    const loginUser = () => {
+        const foundUser = user.find((item) => item.phone === phone && item.password === password);
+        if (foundUser) {
+            navigation.navigate("TrangChu", { userPhone: phone });
+            setCheck(false);
+        } else {
+            setCheck(true);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -19,28 +44,32 @@ export default function Login({ navigation }) {
                     <Text style={styles.textTitleBody}>Đăng nhập</Text>
                     <View style={styles.viewInput}>
                         <TextInput style={styles.inputText}
+                            onChangeText={(text) => setPhone(text)}
                             placeholder='    Số điện thoại'>
                         </TextInput>
                     </View>
                     <View style={styles.viewInput2}>
                         <TextInput style={styles.inputText}
+                            onChangeText={(text) => setPassword(text)}
                             placeholder='    Mã pin'>
                         </TextInput>
                     </View>
-                    <TouchableOpacity style={styles.btnDangNhap}>
+                    <TouchableOpacity style={styles.btnDangNhap}
+                        onPress={loginUser}>
                         <Text style={styles.textDangNhap}>Đăng nhập</Text>
                     </TouchableOpacity>
+                    {check ? <Text style={styles.exception}>Invalid Phone or Password</Text> : null}
                 </View>
             </View>
             <View style={styles.footer}>
                 <View style={styles.footerSecondary1}>
                     <Text style={styles.textTitleFooter1}>Bạn chưa có tài khoản?</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("DangKy",{ userPhone: phone })}>
                         <Text style={styles.textTitleFooter2}> Đăng ký ngay</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footerSecondary2}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("QuenMaPin")}>
                         <Text style={styles.textTitleFooter3}>Quên mật khẩu</Text>
                     </TouchableOpacity>
                 </View>
@@ -133,7 +162,8 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: 'Regular',
         fontStyle: 'Open Sans',
-        color: '#BCC1CA'
+        color: '#BCC1CA',
+        padding: 10
     },
     viewInput2: {
         width: '80%',
@@ -196,6 +226,12 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontStyle: 'Open Sans',
         fontWeight: 'Mixed'
+    },
+    exception: {
+        top: 100,
+        color: 'red',
+        fontWeight: '500',
+        fontStyle: 'Epilogue',
     }
 
 });
