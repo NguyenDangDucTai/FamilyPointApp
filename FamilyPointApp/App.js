@@ -21,7 +21,7 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ThongTinCaNhan">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
         <Stack.Screen name='DangKy' component={DangKy} options={{ headerShown: false }}/>
         <Stack.Screen name='QuenMaPin' component={QuenMaPin} options={{ headerShown: false }}/>

@@ -17,7 +17,7 @@ export default function QuenMaPin({ navigation }) {
             </View>
             <View style={styles.body}>
                 <View style={styles.viewTitle}>
-                    <Image source={require('../assets/DangKy/i.png')}
+                    <Image source={require('../assets/QuenTaiKhoan/i.png')}
                         style={styles.imgI}
                     />
                     <Text style={styles.textTitle}>Thông tin số điện thoại</Text>
@@ -31,7 +31,7 @@ export default function QuenMaPin({ navigation }) {
             </View>
             <View style={styles.footer}>
                 <TouchableOpacity style={styles.btnCancel}>
-                    <Image source={require('../assets/DangKy/cancel.png')}
+                    <Image source={require('../assets/QuenTaiKhoan/cancel.png')}
                         style={styles.imgCancel}
                     />
                     <Text style={styles.textCancel}>Hủy bỏ</Text>
