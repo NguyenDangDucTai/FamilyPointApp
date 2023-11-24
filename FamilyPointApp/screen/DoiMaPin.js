@@ -3,8 +3,75 @@ import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity } from 'reac
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from "react-native-vector-icons/FontAwesome";
+import React, { useState, useEffect, useCallback } from "react";
 
-export default function DoiMaPin({ navigation }) {
+export default function DoiMaPin({ navigation, route }) {
+    const { userPhone } = route.params;
+    const [user, setUser] = useState({
+        id: "",
+        password: "",
+        // ... other fields
+    });
+    const [oldPin, setOldPin] = useState("");
+    const [newPin, setNewPin] = useState("");
+    const [confirmNewPin, setConfirmNewPin] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        fetchData();
+    }, [userPhone]);
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch("https://656047f683aba11d99d086dc.mockapi.io/users");
+            if (!response.ok) {
+                throw new Error("Failed to fetch data");
+            }
+            const data = await response.json();
+            const userData = data.find((userData) => userData.phone === userPhone);
+
+            if (userData) {
+                setUser(userData);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const updateUserData = async () => {
+        try {
+            // Kiểm tra mã PIN cũ
+            if (oldPin !== user.password) {
+                setErrorMessage("Mã PIN cũ không đúng");
+                return;
+            }
+
+            // Kiểm tra nhập lại mã PIN mới
+            if (newPin !== confirmNewPin) {
+                setErrorMessage("Nhập lại mã PIN mới không khớp");
+                return;
+            }
+
+            const response = await fetch(`https://656047f683aba11d99d086dc.mockapi.io/users/${user.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ ...user, password: newPin }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const updatedUserData = await response.json();
+            setUser(updatedUserData);
+            navigation.navigate("TrangChu", { userPhone: userPhone });
+        } catch (error) {
+            console.error("Error updating user data:", error);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -24,25 +91,39 @@ export default function DoiMaPin({ navigation }) {
                 </View>
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Mã PIN cũ*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        secureTextEntry={true}
+                        value={oldPin}
+                        onChangeText={(text) => setOldPin(text)}></TextInput>
                 </View>
+                {errorMessage !== "" && (
+                    <Text style={styles.errorMessage}>{errorMessage}</Text>
+                )}
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Mã PIN mới*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        secureTextEntry={true}
+                        value={newPin}
+                        onChangeText={(text) => setNewPin(text)}></TextInput>
                 </View>
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Nhập lại mã PIN mới*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        secureTextEntry={true}
+                        value={confirmNewPin}
+                        onChangeText={(text) => setConfirmNewPin(text)}></TextInput>
                 </View>
             </View>
             <View style={styles.footer}>
-                <TouchableOpacity style={styles.btnCancel}>
+                <TouchableOpacity style={styles.btnCancel}
+                    onPress={() => navigation.navigate("ThongTinCaNhan", { userPhone: userPhone })}>
                     <Image source={require('../assets/DoiMaPin/cancel.png')}
                         style={styles.imgCancel}
                     />
                     <Text style={styles.textCancel}>Hủy bỏ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnCapNhat}>
+                <TouchableOpacity style={styles.btnCapNhat}
+                    onPress={updateUserData}>
                     <Text style={styles.textCapNhat}>Cập nhật</Text>
                 </TouchableOpacity>
             </View>
@@ -138,8 +219,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         height: '30%',
-        width:'25%',
-        padding:10,
+        width: '25%',
+        padding: 10,
     },
     imgCancel: {
         height: 20,
@@ -160,7 +241,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    
+
     },
     textCapNhat: {
         fontSize: 18,
@@ -168,5 +249,11 @@ const styles = StyleSheet.create({
         fontStyle: 'Open Sans',
         color: '#fff'
     },
+    errorMessage:{
+        top:170,
+        color: 'red',
+        fontWeight: '500',
+        fontStyle: 'Epilogue',
+    }
 
 });
