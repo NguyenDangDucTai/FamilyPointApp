@@ -50,6 +50,9 @@ export default function Login({ navigation }) {
                     </View>
                     <View style={styles.viewInput2}>
                         <TextInput style={styles.inputText}
+                            secureTextEntry={true}
+                            editable={true}
+                            keyboardType={'visible-password'}                      
                             onChangeText={(text) => setPassword(text)}
                             placeholder='    Mã pin'>
                         </TextInput>
@@ -64,7 +67,7 @@ export default function Login({ navigation }) {
             <View style={styles.footer}>
                 <View style={styles.footerSecondary1}>
                     <Text style={styles.textTitleFooter1}>Bạn chưa có tài khoản?</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("DangKy",{ userPhone: phone })}>
+                    <TouchableOpacity onPress={() => navigation.navigate("DangKy", { userPhone: phone })}>
                         <Text style={styles.textTitleFooter2}> Đăng ký ngay</Text>
                     </TouchableOpacity>
                 </View>
