@@ -3,12 +3,123 @@ import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity } from 'reac
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from "react-native-vector-icons/FontAwesome";
+import React, { useState, useEffect, useCallback } from "react";
 
-export default function DangKy({ navigation }) {
+export default function DangKy({ navigation, route }) {
+
+    const { userPhone } = route.params;
+    //const [user, setUser] = useState();
+    const [newItemName, setNewItemName] = useState("");
+    const [newItemPhone, setNewItemPhone] = useState("");
+    const [newItemPassword, setNewItemPassword] = useState("");
+    const [newItemBirthday, setNewItemBirthday] = useState("");
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://656047f683aba11d99d086dc.mockapi.io/users");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+                const json = await response.json();
+                setData(json);
+            } catch (error) {
+                console.error("Lỗi khi tải dữ liệu:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // const reloadUserData = async () => {
+    //     try {
+    //         const response = await fetch("https://656047f683aba11d99d086dc.mockapi.io/users");
+
+    //         if (!response.ok) {
+    //             throw new Error("Failed to fetch data");
+    //         }
+
+    //         const json = await response.json();
+    //         setData(json);
+    //     } catch (error) {
+    //         console.error("Lỗi khi tải dữ liệu:", error);
+    //     }
+    // };
+
+    // const reloadUserData = async () => {
+    //     try {
+    //         const response = await fetch(
+    //             "https://656047f683aba11d99d086dc.mockapi.io/users"
+    //         );
+
+    //         if (!response.ok) {
+    //             throw new Error("Failed to fetch data");
+    //         }
+
+    //         const data = await response.json();
+    //         const user = data.find((user) => user.phone === userPhone);
+
+    //         // const json = await response.json();
+    //         // setData(json);
+
+    //         if (user) {
+    //             setData(user);
+    //         }
+    //     } catch (error) {
+    //         console.error("Lỗi khi tải dữ liệu:", error);
+    //     }
+    // };
+
+    const addItem = async () => {
+        try {
+            if (newItemName.trim() !== "" && newItemPhone.trim() !== "" && newItemPassword.trim() !== "" && newItemBirthday.trim() !== "") {
+                const newItem = {
+                    name: newItemName,
+                    phone: newItemPhone,
+                    password: newItemPassword,
+                    birthday: newItemBirthday
+                };
+                // Thêm mục vào API
+                const response = await fetch("https://656047f683aba11d99d086dc.mockapi.io/users",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(newItem),
+                    }
+                );
+                if (!response.ok) {
+                    throw new Error("Failed to add item");
+                }
+                const responseData = await response.json();
+                // Cập nhật trạng thái dữ liệu sau khi thêm thành công
+                setData((prevData) => [...prevData, responseData]);
+                setNewItemName("");
+                setNewItemPhone("");
+                setNewItemPassword("");
+                setNewItemBirthday("");
+                // Chuyển hướng sau khi cập nhật dữ liệu
+                //reloadUserData();
+
+            }
+        } catch (error) {
+            console.error("Lỗi khi thêm tài khoản:", error);
+        }
+        navigation.navigate("Login");
+    };
+
+    // useEffect(() => {
+    //     // Load dữ liệu khi màn hình được tạo ra hoặc mỗi khi userPhone thay đổi
+    //     reloadUserData();
+    // }, [userPhone]);
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.btnBack}>
+                <TouchableOpacity style={styles.btnBack}
+                    onPress={() => navigation.navigate("Login")}>
                     <Icon name='arrow-left' size={30} color='white' />
                 </TouchableOpacity>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -24,30 +135,44 @@ export default function DangKy({ navigation }) {
                 </View>
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Họ tên*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        onChangeText={(text) => setNewItemName(text)}
+                        value={newItemName}>
+                    </TextInput>
                 </View>
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Số điện thoại*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        onChangeText={(text) => setNewItemPhone(text)}
+                        value={newItemPhone}>
+                    </TextInput>
                 </View>
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Mã pin*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        onChangeText={(text) => setNewItemPassword(text)}
+                        value={newItemPassword}>
+                    </TextInput>
                 </View>
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Ngày sinh*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        onChangeText={(text) => setNewItemBirthday(text)}
+                        value={newItemBirthday}>
+                    </TextInput>
                 </View>
             </View>
             <View style={styles.footer}>
-                <TouchableOpacity style={styles.btnCancel}>
+                <TouchableOpacity style={styles.btnCancel}
+                    onPress={() => navigation.navigate("Login")}>
                     <Image source={require('../assets/DangKy/cancel.png')}
                         style={styles.imgCancel}
                     />
                     <Text style={styles.textCancel}>Hủy bỏ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnDangKy}>
-                    <Text style={styles.textDangKy}>Đăng ký</Text>
+                <TouchableOpacity style={styles.btnDangKy}
+                    onPress={addItem}>
+                    <Text style={styles.textDangKy2}>Đăng ký</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -142,8 +267,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         height: '30%',
-        width:'25%',
-        padding:10,
+        width: '25%',
+        padding: 10,
     },
     imgCancel: {
         height: 20,
@@ -164,9 +289,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    
+
     },
-    textDangKy: {
+    textDangKy2: {
         fontSize: 18,
         fontWeight: 'bold',
         fontStyle: 'Open Sans',
