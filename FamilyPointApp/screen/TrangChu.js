@@ -1,4 +1,9 @@
 import {FlatList, Image, StyleSheet, Text, View} from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Icon from "react-native-vector-icons/FontAwesome";
+import React, { useState, useEffect, useCallback } from "react";
 
 
 
@@ -45,23 +50,70 @@ const DATAVOUCHER = [
 ]
 
 
-export default function TrangChu(){
+export default function TrangChu({ route, navigation }){
+
+    const { userPhone } = route.params;
+    const [userPlan, setUserPlan] = useState([]);
+    const [user, setUser] = useState();
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
+          .then((response) => response.json())
+          .then((data) => {
+            const user = data.find((user) => user.phone === userPhone);
+            setUser(user.id);
+            setData(user);
+          })
+          .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
+      }, [userPhone]);
+
+      const loadData = async () => {
+        try {
+          const response = await fetch(
+            `https://656047f683aba11d99d086dc.mockapi.io/users`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch data");
+          }
+          const data = await response.json();
+          const user = data.find((user) => user.phone === userPhone);
+    
+          if (user) {
+            setUser(user.id);
+            setData(user);
+          }
+        } catch (error) {
+          console.error("Lỗi khi tải dữ liệu:", error);
+        }
+      };
+    //   useEffect(() => {
+    //     const unsubscribe = navigation.addListener(
+    //       "focus",
+    //       () => {
+    //         loadData();
+    //       },
+    //       [userPhone]
+    //     );
+    //     return unsubscribe;
+    //   }, [navigation]);
+
     return(
         <View style={styles.container}>
             <View style={styles.title}>
                 <View style={styles.backgroundAvatar}>
-                    <Image source={require('../assets/TrangChu/avatar.png')} style={{width:85, height:85, borderRadius:100}}/>
+                    <Image source={{uri:data?.avatar}} style={{width:85, height:85, borderRadius:100}}/>
                 </View>
                 <View style={{flex:1, justifyContent:'space-around'}}>
                     <Text style={{color:'white', fontSize:15}}>Xin chào!</Text>
-                    <Text style={{fontWeight:'bold', fontSize:25, color:'white'}}>Nguyễn Văn A</Text>
+                    <Text style={{fontWeight:'bold', fontSize:25, color:'white'}}>{data?.name}</Text>
                     <View style={{flexDirection:'row', justifyContent:'space-around'}}>
                         <View style={{backgroundColor:'white', borderRadius:15, width:100, height:25, justifyContent:'center', alignItems:'center'}}>
                             <Text style={{color:'#008CD7', fontWeight:'bold'}}>Thành viên</Text>
                         </View>
                         <View style={{backgroundColor:'white', borderRadius:15, width:120, height:25, justifyContent:'space-around', alignItems:'center', flexDirection:'row'}}>
                             <Image source={require('../assets/TrangChu/caivi.png')} style={{width:20, height:20}}/>
-                            <Text style={{color:'#00A040', fontWeight:'bold'}}>10000 pt</Text>
+                            <Text style={{color:'#00A040', fontWeight:'bold'}}>{data?.point} pt</Text>
                         </View>
                     </View>
                 </View>
