@@ -10,6 +10,8 @@ export default function Login({ navigation }) {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [check, setCheck] = useState(false);
+    const [checkPhone, setCheckPhone] = useState(false);
+    const [checkPassword, setCheckPassword] = useState(false);
 
     useEffect(() => {
         fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
@@ -18,8 +20,25 @@ export default function Login({ navigation }) {
                 setuser(json);
             });
     }, []);
+    
+    const isVietnamesePhoneNumber = (phoneNumber) => {
+        const regex = /^(0[1-9][0-9]{8})$/;
+        return regex.test(phoneNumber);
+    };
+    const isPasswordValid = (password) => {
+        const regex = /^\d{6}$/;
+        return regex.test(password);
+    };
 
     const loginUser = () => {
+        if (!isVietnamesePhoneNumber(phone)) {
+            setCheckPhone(true);
+            return;
+        }
+        if (!isPasswordValid(password)) {
+            setCheckPassword(true);
+            return;
+        }
         const foundUser = user.find((item) => item.phone === phone && item.password === password);
         if (foundUser) {
             navigation.navigate("TrangChu", { userPhone: phone });
@@ -27,6 +46,7 @@ export default function Login({ navigation }) {
         } else {
             setCheck(true);
         }
+
     };
 
     return (
@@ -52,7 +72,7 @@ export default function Login({ navigation }) {
                         <TextInput style={styles.inputText}
                             secureTextEntry={true}
                             editable={true}
-                            keyboardType={'visible-password'}                      
+                            keyboardType={'visible-password'}
                             onChangeText={(text) => setPassword(text)}
                             placeholder='    Mã pin'>
                         </TextInput>
@@ -61,7 +81,9 @@ export default function Login({ navigation }) {
                         onPress={loginUser}>
                         <Text style={styles.textDangNhap}>Đăng nhập</Text>
                     </TouchableOpacity>
-                    {check ? <Text style={styles.exception}>Invalid Phone or Password</Text> : null}
+                    {check ? <Text style={styles.exception}>Số điện thoại chưa được đăng ký hoặc mã pin không chính xác!</Text> : null}
+                    {checkPhone ? <Text style={styles.exception}>Số điện thoại không hợp lệ!</Text> : null}
+                    {checkPassword ? <Text style={styles.exception}>Mã pin không hợp lệ (6 chữ số)!</Text> : null}
                 </View>
             </View>
             <View style={styles.footer}>
