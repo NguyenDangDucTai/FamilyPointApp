@@ -66,6 +66,7 @@ export default function TrangChu({ route, navigation }) {
                 setData(user);
             })
             .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
+        //loadData();
     }, [userPhone]);
 
     const loadData = async () => {
@@ -97,6 +98,20 @@ export default function TrangChu({ route, navigation }) {
     //     );
     //     return unsubscribe;
     //   }, [navigation]);
+
+    // const handleUpdate = async () => {
+    //     // Perform your update logic here (replace the comment with your actual update logic)
+    //     // For example, you might have an API call to update user data
+    //     // await updateUserData(user.id, updatedData);
+
+    //     // After the update, fetch the updated data
+    //     setRefreshing(true); // Set refreshing state to true to show a loading indicator
+    //     try {
+    //         await loadData();
+    //     } finally {
+    //         setRefreshing(false); // Set refreshing state back to false
+    //     }
+    // };
 
     return (
         <View style={styles.container}>
