@@ -14,6 +14,10 @@ export default function DangKy({ navigation, route }) {
     const [newItemPassword, setNewItemPassword] = useState("");
     const [newItemBirthday, setNewItemBirthday] = useState("");
     const [data, setData] = useState([]);
+    const [checkPhone, setCheckPhone] = useState(false);
+    const [checkPassword, setCheckPassword] = useState(false);
+    const [checkBirthday, setCheckBirthday] = useState(false);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,6 +34,7 @@ export default function DangKy({ navigation, route }) {
         };
 
         fetchData();
+        //loadData();
     }, []);
 
     // const reloadUserData = async () => {
@@ -47,33 +52,56 @@ export default function DangKy({ navigation, route }) {
     //     }
     // };
 
-    // const reloadUserData = async () => {
+
+    // const loadData = async () => {
     //     try {
     //         const response = await fetch(
-    //             "https://656047f683aba11d99d086dc.mockapi.io/users"
+    //             `https://656047f683aba11d99d086dc.mockapi.io/users`
     //         );
-
     //         if (!response.ok) {
     //             throw new Error("Failed to fetch data");
     //         }
-
     //         const data = await response.json();
     //         const user = data.find((user) => user.phone === userPhone);
 
-    //         // const json = await response.json();
-    //         // setData(json);
-
     //         if (user) {
+    //             setUser(user.id);
     //             setData(user);
     //         }
     //     } catch (error) {
     //         console.error("Lỗi khi tải dữ liệu:", error);
     //     }
     // };
+    const isVietnamesePhoneNumber = (phoneNumber) => {
+        const regex = /^(0[1-9][0-9]{8})$/;
+        return regex.test(phoneNumber);
+    };
+
+    const isPasswordValid = (password) => {
+        const regex = /^\d{6}$/;
+        return regex.test(password);
+    };
+    
+    const isDateFormatValid = (dateString) => {
+        const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+        return regex.test(dateString);
+    };
 
     const addItem = async () => {
         try {
             if (newItemName.trim() !== "" && newItemPhone.trim() !== "" && newItemPassword.trim() !== "" && newItemBirthday.trim() !== "") {
+                if (!isVietnamesePhoneNumber(newItemPhone)) {
+                    setCheckPhone(true);
+                    return;
+                }
+                if (!isPasswordValid(newItemPassword)) {
+                    setCheckPassword(true);
+                    return;
+                }
+                if (!isDateFormatValid(newItemBirthday)) {
+                    setCheckBirthday(true);
+                    return;
+                }
                 const newItem = {
                     name: newItemName,
                     phone: newItemPhone,
@@ -101,7 +129,7 @@ export default function DangKy({ navigation, route }) {
                 setNewItemPassword("");
                 setNewItemBirthday("");
                 // Chuyển hướng sau khi cập nhật dữ liệu
-                //reloadUserData();
+                //handleUpdate();
 
             }
         } catch (error) {
@@ -110,10 +138,15 @@ export default function DangKy({ navigation, route }) {
         navigation.navigate("Login");
     };
 
-    // useEffect(() => {
-    //     // Load dữ liệu khi màn hình được tạo ra hoặc mỗi khi userPhone thay đổi
-    //     reloadUserData();
-    // }, [userPhone]);
+    // const handleUpdate = async () => {
+
+    //     setRefreshing(true); // Set refreshing state to true to show a loading indicator
+    //     try {
+    //         await loadData();
+    //     } finally {
+    //         setRefreshing(false); // Set refreshing state back to false
+    //     }
+    // };
 
     return (
         <View style={styles.container}>
@@ -174,6 +207,9 @@ export default function DangKy({ navigation, route }) {
                     onPress={addItem}>
                     <Text style={styles.textDangKy2}>Đăng ký</Text>
                 </TouchableOpacity>
+                {checkPhone ? <Text style={styles.exception}>Số điện thoại không hợp lệ!</Text> : null}
+                {checkPassword ? <Text style={styles.exception}>Mã pin không hợp lệ! (6 chữ số)</Text> : null}
+                {checkBirthday ? <Text style={styles.exception}>Ngày sinh không hợp lệ! (dd/MM/yyyy)</Text> : null}
             </View>
         </View>
     );
@@ -297,5 +333,11 @@ const styles = StyleSheet.create({
         fontStyle: 'Open Sans',
         color: '#000'
     },
+    exception: {
+        top: 10,
+        color: 'red',
+        fontWeight: '500',
+        fontStyle: 'Epilogue',
+    }
 
 });
