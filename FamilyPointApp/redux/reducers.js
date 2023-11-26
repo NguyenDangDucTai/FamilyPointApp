@@ -1,4 +1,4 @@
-const initialState = {phone:'', dataQTCH:[], dataQTHH:[]}
+const initialState = {phone:'', dataQTCH:[], dataQTHH:[], user:""}
 
 function reducer(state = initialState, action){
     switch (action.type){
@@ -13,6 +13,10 @@ function reducer(state = initialState, action){
         case 'Set_DataQTHH':return {
             ...state,
             dataQTHH: action.payload,
+        }
+        case 'Set_UserR':return {
+            ...state,
+            user: action.payload,
         }
         default: return state;
     }
