@@ -75,7 +75,11 @@ export default function DoiMaPin({ navigation, route }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.btnBack}>
+                <TouchableOpacity style={styles.btnBack}
+                    onPress={() => {
+                        navigation.navigate("ThongTinCaNhan");
+                    }}
+                >
                     <Icon name='arrow-left' size={30} color='white' />
                 </TouchableOpacity>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -149,6 +153,7 @@ const styles = StyleSheet.create({
         height: 80,
     },
     btnBack: {
+        zIndex: 10,
         width: '50px',
         position: 'absolute',
         top: 28
@@ -249,8 +254,8 @@ const styles = StyleSheet.create({
         fontStyle: 'Open Sans',
         color: '#fff'
     },
-    errorMessage:{
-        top:170,
+    errorMessage: {
+        top: 170,
         color: 'red',
         fontWeight: '500',
         fontStyle: 'Epilogue',

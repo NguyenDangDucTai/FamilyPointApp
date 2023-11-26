@@ -140,7 +140,7 @@ export default function ThongTinCaNhan({ navigation, route }) {
             </View>
             <View style={styles.footer}>
                 <TouchableOpacity style={styles.btnCancel}
-                    onPress={() => navigation.navigate("TrangChu", { userPhone: userPhone })}>
+                    onPress={() => navigation.navigate("Home", { userPhone: userPhone })}>
                     <Image source={require('../assets/ThongTinCaNhan/cancel.png')}
                         style={styles.imgCancel}
                     />
