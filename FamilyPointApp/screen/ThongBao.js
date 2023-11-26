@@ -20,9 +20,6 @@ export default function ThongBao({navigation}){
     return(
         <View style={styles.container}>
             <View style={styles.title}>
-                <TouchableOpacity style={{width:'50px',position:'absolute', top:28}}>
-                    <Icon name='arrow-left' size={30} color='white'/>
-                </TouchableOpacity>
                 <View style={{flex:1,  alignItems:'center', justifyContent:'center'}}>
                     <Text style={styles.textThongBao}>THÔNG BÁO</Text>
                 </View>

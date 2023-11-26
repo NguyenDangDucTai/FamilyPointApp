@@ -1,16 +1,29 @@
 import {FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
+import {useState} from "react";
 
 
-const DATA = [
+const databtn1 = [
     {
         id:'01',
         name:'E-Coupon Trị giá 5.000Đ',
         date:5
     }
 ]
+const databnt2 = [
+    {
+        id:'01',
+        name:'E-Coupon Trị giá 10.000Đ',
+        date:5
+    }
+]
 
 export default function QuaTang({navigation}){
+    const [colorbtn1, setcolor1] = useState('#00A040');
+    const [colorbtn2, setcolor2] = useState('#858585');
+    const [btn1, setbtn1] = useState(true)
+    const [btn2, setbtn2] = useState(false)
+    const [DATA, setDATA] = useState(databtn1)
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
@@ -25,13 +38,29 @@ export default function QuaTang({navigation}){
                 </View>
             </View>
             <View style={styles.body2}>
-                <TouchableOpacity style={styles.button1}>
-                    <Text style={styles.textbar1}>Còn hiệu lực</Text>
-                    <View style={styles.barbtt1}></View>
+                <TouchableOpacity style={styles.button1}
+                                  onPress={()=>{
+                                      setcolor1('#00A040')
+                                      setcolor2('#858585')
+                                      setbtn1(true)
+                                      setbtn2(false)
+                                      setDATA(databnt1)
+                                  }}
+                >
+                    <Text style={[styles.textbar1, {color: colorbtn1}]}>Còn hiệu lực</Text>
+                    <View style={[styles.barbtt1, {backgroundColor: colorbtn1}]}></View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button2}>
-                    <Text style={styles.textbar2}>Hết hiệu lực</Text>
-                    <View style={styles.barbtt2}></View>
+                <TouchableOpacity style={styles.button2}
+                                  onPress={()=>{
+                                      setcolor1('#858585')
+                                      setcolor2('#00A040')
+                                      setbtn1(false)
+                                      setbtn2(true)
+                                      setDATA(databnt2)
+                                  }}
+                >
+                    <Text style={[styles.textbar2, {color: colorbtn2}]}>Hết hiệu lực</Text>
+                    <View style={[styles.barbtt2, {backgroundColor: colorbtn2}]}></View>
                 </TouchableOpacity>
             </View>
             <View style={styles.body3}>
@@ -135,12 +164,10 @@ const styles = StyleSheet.create({
         fontSize:18,
         fontFamily:'Open-Sans',
         fontWeight:'bold',
-        color:'#00A040',
         marginBottom:10
     },
     barbtt1:{width:'100%',
-        height:'5px',
-        backgroundColor: '#00A040'
+        height:'3px',
     },
     button2:{
         alignItems:'center',
@@ -152,13 +179,11 @@ const styles = StyleSheet.create({
         fontSize:18,
         fontFamily:'Open-Sans',
         fontWeight:'bold',
-        color:'#858585',
         marginBottom:10
     },
     barbtt2:{
         width:'100%',
         height:'3px',
-        backgroundColor: '#858585'
     },
     voucher:{
         paddingLeft:10,

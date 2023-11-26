@@ -6,7 +6,11 @@ export default function HoTro({navigation}){
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
-                <TouchableOpacity style={{width:'50px',position:'absolute', top:28}}>
+                <TouchableOpacity style={{width:'50px', zIndex:10, position:'absolute', top:15}}
+                                  onPress={()=>{
+                                      navigation.navigate('Home')
+                                  }}
+                >
                     <Icon name='arrow-left' size={30} color='white'/>
                 </TouchableOpacity>
                 <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
@@ -108,7 +112,6 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius:50,
         paddingHorizontal:20,
         paddingVertical:10,
-        flexDirection:'row',
         width:'100%',
         height:80,
     },

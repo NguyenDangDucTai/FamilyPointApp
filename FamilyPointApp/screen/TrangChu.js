@@ -7,31 +7,36 @@ import React, { useState, useEffect, useCallback } from "react";
 
 
 
-const DATA = [
+const DATATinhNang = [
     {
         id: 1,
         img: require('../assets/TrangChu/iconLSD.png'),
         title: 'Lịch sử điểm',
+        screen: "LichSuDiem",
     },
     {
         id: 2,
         img: require('../assets/TrangChu/iconTTCN.png'),
         title: 'Thông tin cá nhân',
+        screen: "ThongTinCaNhan",
     },
     {
         id: 3,
         img: require('../assets/TrangChu/iconHTCH.png'),
         title: 'Hệ thống cửa hàng',
+        screen: "LichSuDiem"
     },
     {
         id: 4,
         img: require('../assets/TrangChu/iconTTTG.png'),
         title: 'Trung tâm trợ giúp',
+        screen: "HoTro",
     },
     {
         id: 5,
         img: require('../assets/TrangChu/iconCaiDat.png'),
         title: 'Cài đặt',
+        screen: "CaiDat",
     },
 ]
 
@@ -51,23 +56,22 @@ const DATAVOUCHER = [
 
 
 export default function TrangChu({ route, navigation }) {
-
-    const { userPhone } = route.params;
+    // const {userPhone} = route.params;
     const [userPlan, setUserPlan] = useState([]);
     const [user, setUser] = useState();
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-        fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
-            .then((response) => response.json())
-            .then((data) => {
-                const user = data.find((user) => user.phone === userPhone);
-                setUser(user.id);
-                setData(user);
-            })
-            .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
-        //loadData();
-    }, [userPhone]);
+    // useEffect(() => {
+    //     fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             const user = data.find((user) => user.phone === userPhone);
+    //             setUser(user.id);
+    //             setData(user);
+    //         })
+    //         .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
+    //     //loadData();
+    // }, [userPhone]);
 
     const loadData = async () => {
         try {
@@ -141,13 +145,17 @@ export default function TrangChu({ route, navigation }) {
                 <View style={{ alignItems: 'center', marginVertical: 10 }}>
                     <FlatList
                         horizontal={true}
-                        data={DATA}
+                        data={DATATinhNang}
                         renderItem={({ item }) => {
                             return (
-                                <View style={{ width: 70, paddingHorizontal: 5, alignItems: 'center' }}>
+                                <TouchableOpacity style={{ width: 70, paddingHorizontal: 5, alignItems: 'center' }}
+                                                  onPress={()=>{
+                                                      navigation.navigate(item.screen)
+                                                  }}
+                                >
                                     <Image source={item.img} style={{ width: 60, height: 60 }} />
                                     <Text style={{ textAlign: 'center' }}>{item.title}</Text>
-                                </View>
+                                </TouchableOpacity>
                             )
                         }} />
                 </View>
@@ -197,15 +205,6 @@ export default function TrangChu({ route, navigation }) {
                     <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Quà tặng</Text>
                 </View>
             </View>
-            <View> <TouchableOpacity style={{
-                height: 20,
-                borderRadius: 20,
-                backgroundColor: 'gray',
-                borderColor: '#9095A0',
-                borderWidth: 1,
-            }}
-                onPress={() => navigation.navigate("ThongTinCaNhan", { userPhone: userPhone })}>
-            </TouchableOpacity></View>
         </View >
     )
 }

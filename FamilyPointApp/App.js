@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import Login from './screen/Login';
 import QuaTang from "./screen/QuaTang";
 import PhieuQuaTang from "./screen/PhieuQuaTang";
@@ -16,31 +15,113 @@ import QuenMaPin from './screen/QuenMaPin';
 import DoiMaPin from './screen/DoiMaPin';
 import ThongTinCaNhan from './screen/ThongTinCaNhan';
 import TrangChu from "./screen/TrangChu";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function App() {
-  const Stack = createNativeStackNavigator();
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
-        <Stack.Screen name='DangKy' component={DangKy} options={{ headerShown: false }}/>
-        <Stack.Screen name='QuenMaPin' component={QuenMaPin} options={{ headerShown: false }}/>
-        <Stack.Screen name='DoiMaPin' component={DoiMaPin} options={{ headerShown: false }}/>
-        <Stack.Screen name='TrangChu' component={TrangChu} options={{ headerShown: false }}/>
-        <Stack.Screen name='ThongTinCaNhan' component={ThongTinCaNhan} options={{ headerShown: false }}/>
-        <Stack.Screen name='ThongBao' component={ThongBao} options={{ headerShown: false }}/>
-        <Stack.Screen name='LichSuDiem' component={LichSuDiem} options={{ headerShown: false }}/>
-        <Stack.Screen name='ThuThach' component={ThuThach} options={{ headerShown: false }}/>
-        <Stack.Screen name='HoTro' component={HoTro} options={{ headerShown: false }}/>
-        <Stack.Screen name='CaiDat' component={CaiDat} options={{ headerShown: false }}/>
-        <Stack.Screen name='MyId' component={MyId} options={{ headerShown: false }}/>
-        <Stack.Screen name='QuaTang' component={QuaTang} options={{ headerShown: false }}/>
-        <Stack.Screen name='PhieuQuaTang' component={PhieuQuaTang} options={{ headerShown: false }}/>
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+const TabMain =()=>{
+    return(
+        <Tab.Navigator initialRouteName="TrangChu">
+            <Tab.Screen name="Trangchu" component={TrangChu}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Trang chủ',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='home' color={color} size={size}/>
+                            ),
+                        }}
+            />
+            <Tab.Screen name="ThuThach" component={ThuThach}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Trang chủ',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='flag' color={color} size={size}/>
+                            ),
+                        }}
+            />
+            <Stack.Screen name='MyId' component={MyId}
+                          options={{
+                              headerShown: false,
+                              tabBarLabel:'',
+                              tabBarIcon:({color, size})=>(
+                                  <Image source={require("./assets/TrangChu/iconId.png")} style={{height:80, width:80, bottom:20}}/>
+                              ),
+                          }}
+            />
+            <Tab.Screen name="QuanTang" component={QuaTang}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Quà tặng',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='gift' color={color} size={size}/>
+                            ),
+                        }}
+            />
+            <Tab.Screen name="ThongBao" component={ThongBao}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Thông báo',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='bell' color={color} size={size}/>
+                            ),
+                        }}
+            />
+        </Tab.Navigator>
+    )
 }
+
+
+
+export default function App(){
+  return(
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={TabMain} options={{headerShown: false}}/>
+            <Stack.Screen name="LichSuDiem" component={LichSuDiem} options={{headerShown:false}}/>
+            <Stack.Screen name='Login' component={Login} options={{ headerShown: false }}/>
+            <Stack.Screen name='DangKy' component={DangKy} options={{ headerShown: false }}/>
+            <Stack.Screen name='QuenMaPin' component={QuenMaPin} options={{ headerShown: false }}/>
+            <Stack.Screen name='DoiMaPin' component={DoiMaPin} options={{ headerShown: false }}/>
+            <Stack.Screen name='ThongTinCaNhan' component={ThongTinCaNhan} options={{ headerShown: false }}/>
+            <Stack.Screen name='HoTro' component={HoTro} options={{ headerShown: false }}/>
+            <Stack.Screen name='CaiDat' component={CaiDat} options={{ headerShown: false }}/>
+            <Stack.Screen name='QuaTang' component={QuaTang} options={{ headerShown: false }}/>
+            <Stack.Screen name='PhieuQuaTang' component={PhieuQuaTang} options={{ headerShown: false }}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {

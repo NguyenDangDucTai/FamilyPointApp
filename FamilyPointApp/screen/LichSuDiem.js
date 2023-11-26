@@ -46,6 +46,11 @@ export default function LichSuDiem(){
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
+                <TouchableOpacity style={styles.btnBack} onPress={()=>{
+                    navigation.navigate('Home')
+                }}>
+                    <Icon name="arrow-left" color='white' size={30}/>
+                </TouchableOpacity>
                 <View style={{alignItems:'center', paddingVertical:10}}>
                     <Text style={styles.textTitle}>MY-ID LỊCH SỬ ĐIỂM</Text>
                 </View>
@@ -85,19 +90,6 @@ export default function LichSuDiem(){
                         )
                     }}
                 />
-            </View>
-            <View style={{
-                flex:1,
-                flexDirection:'row',
-                justifyContent:'center',
-                alignItems:'center',
-            }}>
-                <TouchableOpacity style={styles.btn1}>
-                    <Icon name="credit-card" size={30} color="#CCCCCC"/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btn2}>
-                    <Icon name="clock-o" size={40} color="white"/>
-                </TouchableOpacity>
             </View>
 
 
@@ -142,6 +134,12 @@ const styles = StyleSheet.create({
         borderTopRightRadius:20,
         borderBottomRightRadius:20,
         alignItems:'center', justifyContent:'center',
+    },
+    btnBack:{
+        zIndex:10,
+        position:'absolute',
+        top:10,
+        left:10,
     },
 })
 
