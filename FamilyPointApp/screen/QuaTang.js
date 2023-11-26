@@ -2,6 +2,7 @@ import {FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} fr
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import filter from 'lodash.filter'
 
 
 export default function QuaTang({navigation}){
@@ -14,6 +15,22 @@ export default function QuaTang({navigation}){
     const [text2, setText2] = useState("ngày!")
 
     const [DATA, setDATA] = useState(dataCH)
+    const [fulldata, setFullData] = useState(DATA);
+    const [searchQuery, setSearchQuery] = useState("");
+    const handleSearch = (query)=> {
+        setSearchQuery(query);
+        const formattedQuery = query.toString();
+        const filterData = filter(fulldata, (user)=>{
+            return contains(user, formattedQuery);
+        });
+        setDATA(filterData);
+    }
+
+    const contains = ({name}, query) =>{
+        if(name.includes(query))
+            return true;
+        return false;
+    }
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
@@ -23,6 +40,10 @@ export default function QuaTang({navigation}){
                     <TextInput
                         placeholder="Tìm ưu đãi"
                         placeholderTextColor='silver'
+                        clearButtonMode={"always"}
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        onChangeText={(query)=> handleSearch(query)}
                         style={styles.textinputSearch}
                     />
                 </View>
