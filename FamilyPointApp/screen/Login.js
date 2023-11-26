@@ -4,12 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState, useEffect, useCallback } from "react";
 import {useDispatch} from "react-redux";
-import increment from "../redux/action";
+import {increment, setDataQTCH, setDataQTHH} from "../redux/action";
 
 function Login({ navigation }) {
     const dispatch = useDispatch();
-
-
     const [user, setuser] = useState([]);
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
@@ -22,6 +20,16 @@ function Login({ navigation }) {
             .then((response) => response.json())
             .then((json) => {
                 setuser(json);
+            });
+        fetch("https://656320a4ee04015769a6d26a.mockapi.io/QtangCH")
+            .then((response) => response.json())
+            .then((json)=>{
+                dispatch(setDataQTCH(json))
+            });
+        fetch("https://656320a4ee04015769a6d26a.mockapi.io/QtangHH")
+            .then((response) => response.json())
+            .then((json)=>{
+                dispatch(setDataQTHH(json))
             });
     }, []);
     

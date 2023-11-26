@@ -1,5 +1,15 @@
-const increment = (data)=>({
+const increment = (data)=>(
+    {
     type:'Set_User',
     payload: data,
+    }
+)
+const setDataQTCH=(data)=>({
+    type:'Set_DataQTCH',
+    payload: data,
 })
-export default increment;
+const setDataQTHH=(data)=>({
+    type:'Set_DataQTHH',
+    payload: data,
+})
+export {increment, setDataQTCH, setDataQTHH};

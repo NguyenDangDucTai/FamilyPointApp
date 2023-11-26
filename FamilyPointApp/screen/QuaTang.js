@@ -1,29 +1,17 @@
 import {FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
-
-const dataConHan = [
-    {
-        id:'01',
-        name:"E-Coupon Trị giá 5.000Đ",
-        date:5
-    }
-]
-const dataHetHan = [
-    {
-        id:'01',
-        name:'E-Coupon Trị giá 10.000Đ',
-        date:5
-    }
-]
 
 export default function QuaTang({navigation}){
+    
+    const [dataCH, setDataCH] = useState(useSelector((state) =>state.dataQTCH));
+    const [dataHH, setDataHH] = useState(useSelector((state)=>state.dataQTHH));
     const [colorbtn1, setcolor1] = useState('#00A040');
     const [colorbtn2, setcolor2] = useState('#858585');
-    const [btn1, setbtn1] = useState(true)
-    const [btn2, setbtn2] = useState(false)
-    const [DATA, setDATA] = useState(dataConHan)
+
+    const [DATA, setDATA] = useState(dataCH)
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
@@ -42,9 +30,7 @@ export default function QuaTang({navigation}){
                                   onPress={()=>{
                                       setcolor1('#00A040')
                                       setcolor2('#858585')
-                                      setbtn1(true)
-                                      setbtn2(false)
-                                      setDATA(dataConHan)
+                                      setDATA(dataCH)
                                   }}
                 >
                     <Text style={[styles.textbar1, {color: colorbtn1}]}>Còn hiệu lực</Text>
@@ -54,9 +40,7 @@ export default function QuaTang({navigation}){
                                   onPress={()=>{
                                       setcolor1('#858585')
                                       setcolor2('#00A040')
-                                      setbtn1(false)
-                                      setbtn2(true)
-                                      setDATA(dataHetHan)
+                                      setDATA(dataHH)
                                   }}
                 >
                     <Text style={[styles.textbar2, {color: colorbtn2}]}>Hết hiệu lực</Text>
@@ -68,7 +52,11 @@ export default function QuaTang({navigation}){
                     data={DATA}
                     renderItem={({item})=>{
                         return(
-                            <View style={styles.voucher}>
+                            <TouchableOpacity style={styles.voucher}
+                                              onPress={()=>{
+                                                  navigation.navigate("PhieuQuaTang")
+                                              }}
+                            >
                                 <View style={{justifyContent:'center'}}>
                                     <Image
                                         source={require('../assets/QuaTang/voucher.png')}
@@ -90,7 +78,7 @@ export default function QuaTang({navigation}){
                                         </View>
                                     </View>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         )
                     }}
                 />
@@ -193,6 +181,7 @@ const styles = StyleSheet.create({
         width:'300px',
         flexDirection:'row',
         borderRadius:15,
+        marginVertical:5,
     },
     textNameVoucher:{
         fontWeight:'bold',
