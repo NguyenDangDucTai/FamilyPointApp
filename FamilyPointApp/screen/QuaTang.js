@@ -10,6 +10,8 @@ export default function QuaTang({navigation}){
     const [dataHH, setDataHH] = useState(useSelector((state)=>state.dataQTHH));
     const [colorbtn1, setcolor1] = useState('#00A040');
     const [colorbtn2, setcolor2] = useState('#858585');
+    const [text1, setText1] = useState("Còn")
+    const [text2, setText2] = useState("ngày!")
 
     const [DATA, setDATA] = useState(dataCH)
     return(
@@ -31,6 +33,8 @@ export default function QuaTang({navigation}){
                                       setcolor1('#00A040')
                                       setcolor2('#858585')
                                       setDATA(dataCH)
+                                      setText1("Còn")
+                                      setText2("Ngày")
                                   }}
                 >
                     <Text style={[styles.textbar1, {color: colorbtn1}]}>Còn hiệu lực</Text>
@@ -41,6 +45,8 @@ export default function QuaTang({navigation}){
                                       setcolor1('#858585')
                                       setcolor2('#00A040')
                                       setDATA(dataHH)
+                                      setText1("")
+                                      setText2("")
                                   }}
                 >
                     <Text style={[styles.textbar2, {color: colorbtn2}]}>Hết hiệu lực</Text>

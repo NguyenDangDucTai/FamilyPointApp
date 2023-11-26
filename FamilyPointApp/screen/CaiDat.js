@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import {useState} from "react";
 
 
-export default function CaiDat(){
+export default function CaiDat({navigation}){
     const [isEnabled, setIsEnabled] = useState(true);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -14,7 +14,7 @@ export default function CaiDat(){
                     <Icon name='arrow-left' size={30} color='white'/>
                 </TouchableOpacity>
                 <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                    <Text style={styles.textCaiDat}>THÔNG BÁO</Text>
+                    <Text style={styles.textCaiDat}>CÀI ĐẶT</Text>
                 </View>
             </View>
             <View style={styles.body2}>
