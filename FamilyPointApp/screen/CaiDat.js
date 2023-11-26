@@ -4,8 +4,10 @@ import {useState} from "react";
 
 
 export default function CaiDat({navigation}){
-    const [isEnabled, setIsEnabled] = useState(true);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const [isEnabled1, setIsEnabled1] = useState(true);
+    const [isEnabled2, setIsEnabled2] = useState(true);
+    const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
+    const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
 
     return(
         <View style={styles.container}>
@@ -24,22 +26,23 @@ export default function CaiDat({navigation}){
                         <Text>Tự động đăng nhập vào ứng dụng</Text>
                         <Switch
                             trackColor={{false: '#767577', true: '#f5dd4b'}}
-                            thumbColor={isEnabled ? '#00A040' : '#f4f3f4'}
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
+                            thumbColor={isEnabled1 ? '#00A040' : '#f4f3f4'}
+                            onValueChange={toggleSwitch1}
+                            value={isEnabled1}
                         />
                     </View>
                 </View>
                 <View style={styles.box}>
-                    <Text style={styles.textTilteBox1}>Tự động đăng nhập</Text>
-                    <Text>Hello</Text>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.textTilteBox1}>Tự động đăng nhập</Text>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.textTilteBox1}>Tự động đăng nhập</Text>
-                    <Text>Hello</Text>
+                    <Text style={styles.textTilteBox1}>Hiển thị màn hình chính</Text>
+                    <View style={styles.onbox}>
+                        <Text>Ứng dụng sẽ hiển thị <b>màn hình chính</b> đầu tiên khi đăng nhập</Text>
+                        <Switch
+                            trackColor={{false: '#767577', true: '#f5dd4b'}}
+                            thumbColor={isEnabled2 ? '#00A040' : '#f4f3f4'}
+                            onValueChange={toggleSwitch2}
+                            value={isEnabled2}
+                        />
+                    </View>
                 </View>
             </View>
             <View style={styles.body3}>
@@ -99,7 +102,7 @@ const styles = StyleSheet.create({
     },
     box:{
         width:'300px',
-        height:'50px',
+        height:'70px',
         borderWidth:1,
         marginVertical:10,
         borderRadius:15,

@@ -14,7 +14,9 @@ export default function MyId({navigation}){
                         <Text style={{fontWeight:"bold", fontSize:15, color:'#008CD7'}}>FamilyMart</Text>
                     </View>
                     <View style={{backgroundColor:'#00A040', width:'100%', height:15}}></View>
-                    <View></View>
+                    <View style={{justifyContent:'center', alignItems:'center', paddingVertical:10}}>
+                        <Image source={require("../assets/Barcode/barcode.png")} style={{width:200, height:80}}/>
+                    </View>
                     <View style={{position:'absolute',backgroundColor:'#008CD7', width:'100%', height:15, top:134, borderBottomLeftRadius:10, borderBottomRightRadius:10, }}></View>
                 </View>
             </View>
