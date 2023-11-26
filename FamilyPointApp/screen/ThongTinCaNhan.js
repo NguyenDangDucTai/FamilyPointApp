@@ -4,11 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState, useEffect, useCallback } from "react";
+import {useSelector} from "react-redux";
 
 export default function ThongTinCaNhan({ navigation, route }) {
 
     const [data, setData] = useState([]);
-    const { userPhone } = route.params;
+    const userPhone = useSelector((state)=>state.phone);
     const [user, setUser] = useState({
         id: "",
         name: "",
@@ -70,13 +71,17 @@ export default function ThongTinCaNhan({ navigation, route }) {
         } catch (error) {
             console.error("Error updating user data:", error);
         }
-        navigation.navigate("TrangChu", { userPhone: userPhone });
+        navigation.navigate("Home");
     };
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.btnBack}>
+                <TouchableOpacity style={styles.btnBack}
+                                  onPress={()=>{
+                                      navigation.navigate("Home");
+                                  }}
+                >
                     <Icon name='arrow-left' size={30} color='white' />
                 </TouchableOpacity>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -168,6 +173,7 @@ const styles = StyleSheet.create({
         height: '13%',
     },
     btnBack: {
+        zIndex:10,
         width: '50px',
         position: 'absolute',
         top: 28

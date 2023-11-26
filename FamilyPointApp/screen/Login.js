@@ -3,8 +3,12 @@ import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity } from 'reac
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState, useEffect, useCallback } from "react";
+import {useDispatch} from "react-redux";
+import increment from "../redux/action";
 
-export default function Login({ navigation }) {
+function Login({ navigation }) {
+    const dispatch = useDispatch();
+
 
     const [user, setuser] = useState([]);
     const [phone, setPhone] = useState("");
@@ -41,7 +45,9 @@ export default function Login({ navigation }) {
         }
         const foundUser = user.find((item) => item.phone === phone && item.password === password);
         if (foundUser) {
-            navigation.navigate("TrangChu", { userPhone: phone });
+            console.log(phone);
+            dispatch(increment(phone));
+            navigation.navigate("Home");
             setCheck(false);
         } else {
             setCheck(true);
@@ -103,6 +109,8 @@ export default function Login({ navigation }) {
         </View>
     );
 }
+
+export default Login;
 
 const styles = StyleSheet.create({
     container: {

@@ -42,12 +42,12 @@ const DATA = [
 ]
 
 
-export default function LichSuDiem(){
+export default function LichSuDiem({navigation}){
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
                 <TouchableOpacity style={styles.btnBack} onPress={()=>{
-                    navigation.navigate('Home')
+                    navigation.navigate("Home")
                 }}>
                     <Icon name="arrow-left" color='white' size={30}/>
                 </TouchableOpacity>

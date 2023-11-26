@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState, useEffect, useCallback } from "react";
+import {useSelector} from "react-redux";
 
 
 
@@ -57,21 +58,23 @@ const DATAVOUCHER = [
 
 export default function TrangChu({ route, navigation }) {
     // const {userPhone} = route.params;
+    const userPhone = useSelector((state)=>state.phone);
     const [userPlan, setUserPlan] = useState([]);
     const [user, setUser] = useState();
     const [data, setData] = useState([]);
 
-    // useEffect(() => {
-    //     fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             const user = data.find((user) => user.phone === userPhone);
-    //             setUser(user.id);
-    //             setData(user);
-    //         })
-    //         .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
-    //     //loadData();
-    // }, [userPhone]);
+    useEffect(() => {
+        console.log(userPhone)
+        fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
+            .then((response) => response.json())
+            .then((data) => {
+                const user = data.find((user) => user.phone === userPhone);
+                setUser(user.id);
+                setData(user);
+            })
+            .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
+        //loadData();
+    }, [userPhone]);
 
     const loadData = async () => {
         try {

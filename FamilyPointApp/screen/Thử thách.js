@@ -3,14 +3,15 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {useState} from "react";
 
 
-const databtn1 = [
+const dataConHan = [
     {
         id:'01',
         name:'MUA TÍCH LUỸ 5 BÁNH MÌ BẤT KỲ NHẬP E-COUPON',
         date:'06/11/2023 - 13/11/2023',
-    }
+    },
+
 ]
-const databtn2 = [
+const dataHetHan = [
     {
         id:'01',
         name:'MUA TÍCH LUỸ 3 BÁNH MÌ BẤT KỲ NHẬP E-COUPON',
@@ -24,7 +25,7 @@ export default function ThuThach({navigation}){
     const [colorbtn2, setcolor2] = useState('#858585');
     const [btn1, setbtn1] = useState(true)
     const [btn2, setbtn2] = useState(false)
-    const [DATA, setDATA] = useState(databtn1)
+    const [DATA, setDATA] = useState(dataConHan)
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
@@ -45,7 +46,7 @@ export default function ThuThach({navigation}){
                                       setcolor2('#858585')
                                       setbtn1(true)
                                       setbtn2(false)
-                                      setDATA(databtn1)
+                                      setDATA(dataConHan)
                                   }}
                 >
                     <Text style={[styles.textbar1, {color: colorbtn1}]}>Còn hiệu lực</Text>
@@ -57,7 +58,7 @@ export default function ThuThach({navigation}){
                                       setcolor2('#00A040')
                                       setbtn1(false)
                                       setbtn2(true)
-                                      setDATA(databtn2)
+                                      setDATA(dataHetHan)
                                   }}
                 >
                     <Text style={[styles.textbar2, {color: colorbtn2}]}>Hết hiệu lực</Text>
