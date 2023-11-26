@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -41,20 +41,6 @@ const DATATinhNang = [
     },
 ]
 
-const DATAVOUCHER = [
-    {
-        id: '01',
-        name: 'E-Coupon Trị giá 5.000Đ',
-        date: 5
-    },
-    {
-        id: '02',
-        name: 'E-Coupon Trị giá 5.000Đ',
-        date: 5
-    },
-
-]
-
 
 export default function TrangChu({ route, navigation }) {
     const dispatch = useDispatch();
@@ -62,6 +48,7 @@ export default function TrangChu({ route, navigation }) {
     const [userPlan, setUserPlan] = useState([]);
     const [user, setUser] = useState();
     const [data, setData] = useState([]);
+    const dataQtang = useSelector((state)=>state.dataQTCH);
 
     useEffect(() => {
         fetch("https://656047f683aba11d99d086dc.mockapi.io/users")
@@ -141,74 +128,79 @@ export default function TrangChu({ route, navigation }) {
                     </View>
                 </View>
             </View>
-            <View style={styles.body1}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ backgroundColor: '#00A040', height: 40, width: 5, borderRadius: 20, marginRight: 15 }} />
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Tính năng</Text>
+            <ScrollView>
+                <View style={styles.body1}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ backgroundColor: '#00A040', height: 40, width: 5, borderRadius: 20, marginRight: 15 }} />
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Tính năng</Text>
+                    </View>
+                    <View style={{ alignItems: 'center', marginVertical: 10 }}>
+                        <FlatList
+                            horizontal={true}
+                            data={DATATinhNang}
+                            renderItem={({ item }) => {
+                                return (
+                                    <TouchableOpacity style={{ width: 70, paddingHorizontal: 5, alignItems: 'center' }}
+                                                      onPress={()=>{
+                                                          navigation.navigate(item.screen)
+                                                      }}
+                                    >
+                                        <Image source={item.img} style={{ width: 60, height: 60 }} />
+                                        <Text style={{ textAlign: 'center' }}>{item.title}</Text>
+                                    </TouchableOpacity>
+                                )
+                            }} />
+                    </View>
                 </View>
-                <View style={{ alignItems: 'center', marginVertical: 10 }}>
-                    <FlatList
-                        horizontal={true}
-                        data={DATATinhNang}
-                        renderItem={({ item }) => {
-                            return (
-                                <TouchableOpacity style={{ width: 70, paddingHorizontal: 5, alignItems: 'center' }}
-                                                  onPress={()=>{
-                                                      navigation.navigate(item.screen)
-                                                  }}
-                                >
-                                    <Image source={item.img} style={{ width: 60, height: 60 }} />
-                                    <Text style={{ textAlign: 'center' }}>{item.title}</Text>
-                                </TouchableOpacity>
-                            )
-                        }} />
-                </View>
-            </View>
-            <View style={styles.body2}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ backgroundColor: '#00A040', height: 40, width: 5, borderRadius: 20, marginRight: 15 }} />
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Quà tặng</Text>
-                </View>
-                <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-                    <FlatList
-                        horizontal={true}
-                        data={DATAVOUCHER}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={styles.voucher}>
-                                    <View style={{ justifyContent: 'center' }}>
-                                        <Image
-                                            source={require('../assets/QuaTang/voucher.png')}
-                                            style={{ width: '80px', height: '80px' }}
-                                        />
-                                    </View>
-                                    <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                                        <View style={{ width: '70%', paddingTop: 10, paddingLeft: 5 }}>
-                                            <Text style={styles.textNameVoucher}>
-                                                {item.name}
-                                            </Text>
-                                            <Text style={styles.textDateVoucher}>
-                                                Còn {item.date} ngày!
-                                            </Text>
+                <View style={styles.body2}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ backgroundColor: '#00A040', height: 40, width: 5, borderRadius: 20, marginRight: 15 }} />
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Quà tặng</Text>
+                    </View>
+                    <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
+                        <FlatList
+                            horizontal={true}
+                            data={dataQtang}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={styles.voucher}>
+                                        <View style={{ justifyContent: 'center' }}>
+                                            <Image
+                                                source={require('../assets/QuaTang/voucher.png')}
+                                                style={{ width: '80px', height: '80px' }}
+                                            />
                                         </View>
-                                        <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                                            <View style={styles.giatrisudung}>
-                                                <Text style={styles.textGTSD}>Lượt sử dụng còn lại: 1</Text>
+                                        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                                            <View style={{ width: '70%', paddingTop: 10, paddingLeft: 5 }}>
+                                                <Text style={styles.textNameVoucher}>
+                                                    {item.name}
+                                                </Text>
+                                                <Text style={styles.textDateVoucher}>
+                                                    Còn {item.date} ngày!
+                                                </Text>
+                                            </View>
+                                            <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+                                                <View style={styles.giatrisudung}>
+                                                    <Text style={styles.textGTSD}>Lượt sử dụng còn lại: 1</Text>
+                                                </View>
                                             </View>
                                         </View>
                                     </View>
-                                </View>
-                            )
-                        }}
-                    />
+                                )
+                            }}
+                        />
+                    </View>
                 </View>
-            </View>
-            <View style={styles.body3}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ backgroundColor: '#00A040', height: 40, width: 5, borderRadius: 20, marginRight: 15 }} />
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Quà tặng</Text>
+                <View style={styles.body3}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ backgroundColor: '#00A040', height: 40, width: 5, borderRadius: 20, marginRight: 15 }} />
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Bảng tin</Text>
+                    </View>
+                    <View style={{alignItems:'center', marginVertical:15}}>
+                        <Image source={require('../assets/TrangChu/bangtin.png')} style={{width:'350px', height:'175px'}}/>
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         </View >
     )
 }

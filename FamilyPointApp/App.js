@@ -50,7 +50,7 @@ const TabMain =()=>{
                                   headerShown: false,
                                   tabBarLabel:'',
                                   tabBarIcon:({color, size})=>(
-                                      <Image source={require("./assets/TrangChu/iconId.png")} style={{height:80, width:80, bottom:20}}/>
+                                      <Image source={require("./assets/TrangChu/iconId.png")} style={{height:80, width:80, bottom:20, borderRadius:100}}/>
                                   ),
                               }}
                 />
