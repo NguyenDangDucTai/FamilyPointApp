@@ -1,9 +1,39 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-
+import Modal from 'react-native-modal'
+import {useState} from "react";
 
 export default function PhieuQuaTang({navigation}){
+    const [isModalVisible, setModalVisible] = useState(false)
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible)
+    }
+
     return(
         <View style={styles.container}>
+            <Modal style={styles.bottomModalView} isVisible={isModalVisible} backdropOpacity={0} onBackdropPress={toggleModal}>
+                <View style={styles.modal}>
+                    <View>
+                        <Text style={{fontWeight:'bold', fontSize:20}}>Sử dụng mã khuyến mãi</Text>
+                    </View>
+                    <View style={styles.boxBarcode}>
+                        <View style={styles.titleBackground1}>
+                            <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>
+                                Mã thành viên
+                            </Text>
+                        </View>
+                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
+                    </View>
+                    <View style={styles.boxBarcode}>
+                        <View style={styles.titleBackground2}>
+                            <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>
+                                Mã phiếu quà tặng
+                            </Text>
+                        </View>
+                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
+                    </View>
+                </View>
+            </Modal>
             <View style={styles.body1}>
                 <Image source={require('../assets/PhieuQuaTang/Coupon.png')}
                        style={styles.imageCoupon}/>
@@ -33,7 +63,7 @@ export default function PhieuQuaTang({navigation}){
                     <View style={styles.codeNumber}>
                         <Text style={styles.textCode}>12345678912345</Text>
                     </View>
-                    <TouchableOpacity style={styles.buttonSuDung}>
+                    <TouchableOpacity style={styles.buttonSuDung} onPress={toggleModal}>
                         <Text style={styles.textSudung}>Sử dụng</Text>
                     </TouchableOpacity>
                 </View>
@@ -132,6 +162,47 @@ const styles = StyleSheet.create({
         fontSize:18,
         fontFamily:'Open-Sans',
         fontWeight:'bold'
+    },
+    bottomModalView: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+    modal: {
+        width: "100%",
+        height: "60%",
+        borderTopRightRadius:70,
+        borderTopLeftRadius:70,
+        alignItems: "center",
+        borderWidth: 2,
+        borderColor:'silver',
+        borderStyle: 'solid',
+        backgroundColor: "white",
+        paddingVertical:15,
+        justifyContent:'space-around'
+    },
+    boxBarcode:{
+        width:'80%',
+        height:120,
+        borderRadius:20,
+        alignItems:'center',
+    },
+    titleBackground1:{
+        backgroundColor:"#008CD7",
+        width:'100%',
+        height:40,
+        borderTopRightRadius:20,
+        borderTopLeftRadius:20,
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    titleBackground2:{
+        backgroundColor:"#08B404",
+        width:'100%',
+        height:40,
+        borderTopRightRadius:20,
+        borderTopLeftRadius:20,
+        alignItems:'center',
+        justifyContent:'center'
     }
 
 });
