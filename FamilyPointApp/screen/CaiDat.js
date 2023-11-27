@@ -57,12 +57,20 @@ export default function CaiDat({navigation}){
                     alignItems:'center',
                     justifyContent:'center',
                     marginTop:5,
-                }}>
+                }}
+                onPress={() => navigation.navigate("HoTro")}>
                     <Text style={{
                         color:'white',
                         fontWeight:'bold',
                         fontSize:15,
                     }}>Trung tâm hỗ trợ</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btnDangXuat}
+                    onPress={() => navigation.navigate("Login")}>
+                    <Image source={require('../assets/CaiDat/10 1.png')}
+                        style={styles.imgDX}
+                    />
+                    <Text style={styles.textCancel}>Đăng xuất</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -123,6 +131,26 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
+    },
+    btnDangXuat: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: '30%',
+        width: '30%',
+        padding: 10,
+        top:-10
+    },
+    imgDX: {
+        height: 20,
+        width: 20,
+    },
+    textCancel: {
+        color: '#08B404',
+        fontSize: 13,
+        fontStyle: 'Open Sans',
+        fontWeight: 'Regular',
+        fontWeight:'bold'
     },
 
 })
