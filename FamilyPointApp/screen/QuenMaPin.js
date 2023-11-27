@@ -8,7 +8,9 @@ export default function QuenMaPin({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.btnBack}>
+                <TouchableOpacity style={styles.btnBack}
+                                  onPress={()=>{navigation.navigate("Login")}}
+                >
                     <Icon name='arrow-left' size={30} color='white' />
                 </TouchableOpacity>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -64,7 +66,8 @@ const styles = StyleSheet.create({
     btnBack: {
         width: '50px',
         position: 'absolute',
-        top: 28
+        top: 28,
+        zIndex:10,
     },
     textQuenMaPin: {
         fontSize: 25,

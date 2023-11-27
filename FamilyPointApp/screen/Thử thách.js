@@ -1,26 +1,15 @@
 import {FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {useState} from "react";
+import {useSelector} from "react-redux";
 
 
-const dataConHan = [
-    {
-        id:'01',
-        name:'MUA TÍCH LUỸ 5 BÁNH MÌ BẤT KỲ NHẬP E-COUPON',
-        date:'06/11/2023 - 13/11/2023',
-    },
-
-]
-const dataHetHan = [
-    {
-        id:'01',
-        name:'MUA TÍCH LUỸ 3 BÁNH MÌ BẤT KỲ NHẬP E-COUPON',
-        date:'06/11/2023 - 13/11/2023',
-    }
-]
 
 
 export default function ThuThach({navigation}){
+    const dataConHan = useSelector((state)=>state.dataTTCH)
+    const dataHetHan = useSelector((state)=>state.dataTTHH)
+
     const [colorbtn1, setcolor1] = useState('#00A040');
     const [colorbtn2, setcolor2] = useState('#858585');
     const [btn1, setbtn1] = useState(true)
@@ -192,6 +181,7 @@ const styles = StyleSheet.create({
         width:'300px',
         flexDirection:'row',
         borderRadius:15,
+        marginVertical:5,
     },
     textNameVoucher:{
         fontWeight:'bold',

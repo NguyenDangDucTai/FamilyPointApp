@@ -163,7 +163,9 @@ export default function TrangChu({ route, navigation }) {
                             data={dataQtang}
                             renderItem={({ item }) => {
                                 return (
-                                    <View style={styles.voucher}>
+                                    <TouchableOpacity style={styles.voucher}
+                                                      onPress={()=>{navigation.navigate("PhieuQuaTang")}}
+                                    >
                                         <View style={{ justifyContent: 'center' }}>
                                             <Image
                                                 source={require('../assets/QuaTang/voucher.png')}
@@ -185,7 +187,7 @@ export default function TrangChu({ route, navigation }) {
                                                 </View>
                                             </View>
                                         </View>
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                             }}
                         />

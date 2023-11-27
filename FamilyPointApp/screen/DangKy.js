@@ -235,7 +235,8 @@ const styles = StyleSheet.create({
     btnBack: {
         width: '50px',
         position: 'absolute',
-        top: 28
+        top: 28,
+        zIndex:10,
     },
     textDangKy: {
         fontSize: 25,

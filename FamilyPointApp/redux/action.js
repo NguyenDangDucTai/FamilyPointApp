@@ -16,4 +16,13 @@ const setUserR=(data)=>({
     type:'Set_UserR',
     payload:data,
 })
-export {increment, setDataQTCH, setDataQTHH, setUserR};
+const setDataTTCH=(data)=>({
+    type:'Set_DataTTCH',
+    payload:data,
+})
+const setDataTTHH=(data)=>({
+    type:'Set_DataTTHH',
+    payload:data,
+})
+
+export {increment, setDataQTCH, setDataQTHH, setUserR, setDataTTCH, setDataTTHH};

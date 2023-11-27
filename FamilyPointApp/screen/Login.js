@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState, useEffect, useCallback } from "react";
 import {useDispatch} from "react-redux";
-import {increment, setDataQTCH, setDataQTHH} from "../redux/action";
+import {increment, setDataQTCH, setDataQTHH, setDataTTCH, setDataTTHH} from "../redux/action";
 
 function Login({ navigation }) {
     const dispatch = useDispatch();
@@ -31,6 +31,17 @@ function Login({ navigation }) {
             .then((json)=>{
                 dispatch(setDataQTHH(json))
             });
+        fetch("https://6563dcb8ceac41c0761d2715.mockapi.io/dataTTCH")
+            .then((response) => response.json())
+            .then((json)=>{
+                dispatch(setDataTTCH(json))
+            });
+        fetch("https://6563dcb8ceac41c0761d2715.mockapi.io/dataTTHT")
+            .then((response) => response.json())
+            .then((json)=>{
+                dispatch(setDataTTHH(json))
+            });
+
     }, []);
     
     const isVietnamesePhoneNumber = (phoneNumber) => {

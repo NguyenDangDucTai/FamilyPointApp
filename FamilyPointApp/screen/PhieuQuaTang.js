@@ -1,8 +1,9 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Modal from 'react-native-modal'
 import {useState} from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function PhieuQuaTang({navigation}){
+export default function PhieuQuaTang({navigation, route}){
     const [isModalVisible, setModalVisible] = useState(false)
 
     const toggleModal = () => {
@@ -11,30 +12,35 @@ export default function PhieuQuaTang({navigation}){
 
     return(
         <View style={styles.container}>
-            <Modal style={styles.bottomModalView} isVisible={isModalVisible} backdropOpacity={0} onBackdropPress={toggleModal}>
-                <View style={styles.modal}>
-                    <View>
-                        <Text style={{fontWeight:'bold', fontSize:20}}>Sử dụng mã khuyến mãi</Text>
-                    </View>
-                    <View style={styles.boxBarcode}>
-                        <View style={styles.titleBackground1}>
-                            <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>
-                                Mã thành viên
-                            </Text>
-                        </View>
-                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
-                    </View>
-                    <View style={styles.boxBarcode}>
-                        <View style={styles.titleBackground2}>
-                            <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>
-                                Mã phiếu quà tặng
-                            </Text>
-                        </View>
-                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
-                    </View>
-                </View>
-            </Modal>
+            {/*<Modal style={styles.bottomModalView} isVisible={isModalVisible} backdropOpacity={0} onBackdropPress={toggleModal}>*/}
+            {/*    <View style={styles.modal}>*/}
+            {/*        <View>*/}
+            {/*            <Text style={{fontWeight:'bold', fontSize:20}}>Sử dụng mã khuyến mãi</Text>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.boxBarcode}>*/}
+            {/*            <View style={styles.titleBackground1}>*/}
+            {/*                <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>*/}
+            {/*                    Mã thành viên*/}
+            {/*                </Text>*/}
+            {/*            </View>*/}
+            {/*            <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.boxBarcode}>*/}
+            {/*            <View style={styles.titleBackground2}>*/}
+            {/*                <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>*/}
+            {/*                    Mã phiếu quà tặng*/}
+            {/*                </Text>*/}
+            {/*            </View>*/}
+            {/*            <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>*/}
+            {/*        </View>*/}
+            {/*    </View>*/}
+            {/*</Modal>*/}
             <View style={styles.body1}>
+                <TouchableOpacity style={styles.btnBack}
+                                  onPress={()=>{navigation.navigate("Home")}}
+                >
+                    {/*<Icon name='arrow-left' size={30} color='white'/>*/}
+                </TouchableOpacity>
                 <Image source={require('../assets/PhieuQuaTang/Coupon.png')}
                        style={styles.imageCoupon}/>
             </View>
@@ -203,6 +209,12 @@ const styles = StyleSheet.create({
         borderTopLeftRadius:20,
         alignItems:'center',
         justifyContent:'center'
-    }
+    },
+    btnBack:{
+        position:'absolute',
+        zIndex:10,
+        top:10,
+        left:10,
+    },
 
 });

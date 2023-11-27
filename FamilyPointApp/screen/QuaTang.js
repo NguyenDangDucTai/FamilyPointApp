@@ -3,9 +3,15 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import filter from 'lodash.filter'
+import Modal from "react-native-modal";
 
 
 export default function QuaTang({navigation}){
+    const [isModalVisible, setModalVisible] = useState(false)
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible)
+    }
     
     const [dataCH, setDataCH] = useState(useSelector((state) =>state.dataQTCH));
     const [dataHH, setDataHH] = useState(useSelector((state)=>state.dataQTHH));
@@ -13,10 +19,12 @@ export default function QuaTang({navigation}){
     const [colorbtn2, setcolor2] = useState('#858585');
     const [text1, setText1] = useState("Còn")
     const [text2, setText2] = useState("ngày!")
+    const [booleanText, setbooleanText] = useState(true)
 
     const [DATA, setDATA] = useState(dataCH)
     const [fulldata, setFullData] = useState(DATA);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isVisibleSD, setIsVisibleSD] = useState(true)
     const handleSearch = (query)=> {
         setSearchQuery(query);
         const formattedQuery = query.toString();
@@ -33,6 +41,29 @@ export default function QuaTang({navigation}){
     }
     return(
         <View style={styles.container}>
+            <Modal style={styles.bottomModalView} isVisible={isModalVisible} backdropOpacity={0} onBackdropPress={toggleModal}>
+                <View style={styles.modal}>
+                    <View>
+                        <Text style={{fontWeight:'bold', fontSize:20}}>Sử dụng mã khuyến mãi</Text>
+                    </View>
+                    <View style={styles.boxBarcode}>
+                        <View style={styles.titleBackground1}>
+                            <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>
+                                Mã thành viên
+                            </Text>
+                        </View>
+                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
+                    </View>
+                    <View style={styles.boxBarcode}>
+                        <View style={styles.titleBackground2}>
+                            <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>
+                                Mã phiếu quà tặng
+                            </Text>
+                        </View>
+                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
+                    </View>
+                </View>
+            </Modal>
             <View style={styles.body1}>
                 <Text style={styles.textBody1}>PHIẾU QUÀ TẶNG</Text>
                 <View style={styles.searchBar}>
@@ -54,8 +85,10 @@ export default function QuaTang({navigation}){
                                       setcolor1('#00A040')
                                       setcolor2('#858585')
                                       setDATA(dataCH)
+                                      setbooleanText(true)
                                       setText1("Còn")
                                       setText2("Ngày")
+                                      setIsVisibleSD(true)
                                   }}
                 >
                     <Text style={[styles.textbar1, {color: colorbtn1}]}>Còn hiệu lực</Text>
@@ -66,8 +99,10 @@ export default function QuaTang({navigation}){
                                       setcolor1('#858585')
                                       setcolor2('#00A040')
                                       setDATA(dataHH)
-                                      setText1("")
-                                      setText2("")
+                                      setbooleanText(false)
+                                      setText1("Hết hạn")
+                                      setText2("ngày!")
+                                      setIsVisibleSD(false)
                                   }}
                 >
                     <Text style={[styles.textbar2, {color: colorbtn2}]}>Hết hiệu lực</Text>
@@ -92,11 +127,26 @@ export default function QuaTang({navigation}){
                                 </View>
                                 <View style={{flex:1, justifyContent:'space-between'}}>
                                     <View style={{width:'70%', paddingTop:10, paddingLeft:5}}>
-                                        <Text style={styles.textNameVoucher}>
-                                            {item.name}
-                                        </Text>
-                                        <Text style={styles.textDateVoucher}>
-                                            Còn {item.date} ngày!
+                                        <View style={{flexDirection:'row'}}>
+                                            <View style={{width:150}}>
+                                                <Text style={styles.textNameVoucher}>
+                                                    {item.name}
+                                                </Text>
+                                            </View>
+                                            { isVisibleSD &&(
+                                                <View>
+                                                    <TouchableOpacity style={{backgroundColor:'#008CD7', borderRadius:20, width:50, height:35, alignSelf:'center', justifyContent:'center', alignItems:'center'}}
+                                                                      onPress={toggleModal}
+
+                                                    >
+                                                        <Text style={{color:'white', fontWeight:'bold', fontSize:8}}>Sử dụng</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            )}
+
+                                        </View>
+                                        <Text style={[styles.textDateVoucher, {color:booleanText?"#00A040":"red"}]}>
+                                            {text1} {item.date} {text2}
                                         </Text>
                                     </View>
                                     <View style={{alignItems:'flex-end', justifyContent:'flex-end'}}>
@@ -216,7 +266,6 @@ const styles = StyleSheet.create({
     },
     textDateVoucher:{
         fontSize:13,
-        color:'#00A040',
     },
     giatrisudung:{
         backgroundColor:'#D9D9D9',
@@ -231,5 +280,46 @@ const styles = StyleSheet.create({
     textGTSD:{
         fontSize:10,
         color:'#6F6464',
+    },
+    bottomModalView: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+    modal: {
+        width: "100%",
+        height: "60%",
+        borderTopRightRadius:70,
+        borderTopLeftRadius:70,
+        alignItems: "center",
+        borderWidth: 2,
+        borderColor:'silver',
+        borderStyle: 'solid',
+        backgroundColor: "white",
+        paddingVertical:15,
+        justifyContent:'space-around'
+    },
+    boxBarcode:{
+        width:'80%',
+        height:120,
+        borderRadius:20,
+        alignItems:'center',
+    },
+    titleBackground1:{
+        backgroundColor:"#008CD7",
+        width:'100%',
+        height:40,
+        borderTopRightRadius:20,
+        borderTopLeftRadius:20,
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    titleBackground2:{
+        backgroundColor:"#08B404",
+        width:'100%',
+        height:40,
+        borderTopRightRadius:20,
+        borderTopLeftRadius:20,
+        alignItems:'center',
+        justifyContent:'center'
     },
 })

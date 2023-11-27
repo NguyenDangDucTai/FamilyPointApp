@@ -25,57 +25,56 @@ const Tab = createBottomTabNavigator();
 
 const TabMain =()=>{
     return(
-        <Provider store={store}>
-            <Tab.Navigator initialRouteName="TrangChu">
-                <Tab.Screen name="Trangchu" component={TrangChu}
-                            options={{
-                                headerShown: false,
-                                tabBarLabel:'Trang chủ',
-                                tabBarIcon:({color, size})=>(
-                                    <MaterialCommunityIcons name='home' color={color} size={size}/>
-                                ),
-                            }}
-                />
-                <Tab.Screen name="ThuThach" component={ThuThach}
-                            options={{
-                                headerShown: false,
-                                tabBarLabel:'Trang chủ',
-                                tabBarIcon:({color, size})=>(
-                                    <MaterialCommunityIcons name='flag' color={color} size={size}/>
-                                ),
-                            }}
-                />
-                <Stack.Screen name='MyId' component={MyId}
-                              options={{
-                                  headerShown: false,
-                                  tabBarLabel:'',
-                                  tabBarIcon:({color, size})=>(
-                                      <Image source={require("./assets/TrangChu/iconId.png")} style={{height:80, width:80, bottom:20, borderRadius:100}}/>
-                                  ),
-                              }}
-                />
-                <Tab.Screen name="QuanTang" component={QuaTang}
-                            options={{
-                                headerShown: false,
-                                tabBarLabel:'Quà tặng',
-                                tabBarIcon:({color, size})=>(
-                                    <MaterialCommunityIcons name='gift' color={color} size={size}/>
-                                ),
-                            }}
-                />
-                <Tab.Screen name="ThongBao" component={ThongBao}
-                            options={{
-                                headerShown: false,
-                                tabBarLabel:'Thông báo',
-                                tabBarIcon:({color, size})=>(
-                                    <MaterialCommunityIcons name='bell' color={color} size={size}/>
-                                ),
-                            }}
-                />
-            </Tab.Navigator>
-        </Provider>
+        <Tab.Navigator initialRouteName="TrangChu">
+            <Tab.Screen name="Trangchu" component={TrangChu}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Trang chủ',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='home' color={color} size={size}/>
+                            ),
+                        }}
+            />
+            <Tab.Screen name="ThuThach" component={ThuThach}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Thách thức',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='flag' color={color} size={size}/>
+                            ),
+                        }}
+            />
+            <Stack.Screen name='MyId' component={MyId}
+                          options={{
+                              headerShown: false,
+                              tabBarLabel:'',
+                              tabBarIcon:({color, size})=>(
+                                  <Image source={require("./assets/TrangChu/iconId.png")} style={{height:80, width:80, bottom:20, borderRadius:100}}/>
+                              ),
+                          }}
+            />
+            <Tab.Screen name="QuanTang" component={QuaTang}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Quà tặng',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='gift' color={color} size={size}/>
+                            ),
+                        }}
+            />
+            <Tab.Screen name="ThongBao" component={ThongBao}
+                        options={{
+                            headerShown: false,
+                            tabBarLabel:'Thông báo',
+                            tabBarIcon:({color, size})=>(
+                                <MaterialCommunityIcons name='bell' color={color} size={size}/>
+                            ),
+                        }}
+            />
+        </Tab.Navigator>
     )
 }
+
 
 
 
@@ -94,7 +93,7 @@ export default function App(){
                   <Stack.Screen name='HoTro' component={HoTro} options={{ headerShown: false }}/>
                   <Stack.Screen name='CaiDat' component={CaiDat} options={{ headerShown: false }}/>
                   <Stack.Screen name='QuaTang' component={QuaTang} options={{ headerShown: false }}/>
-                  <Stack.Screen name='PhieuQuaTang' component={PhieuQuaTang} options={{ headerTitle:"PHIẾU QUÀ TẶNG", headerTitleAlign:'center'}}/>
+                  <Stack.Screen name='PhieuQuaTang' component={PhieuQuaTang} options={{ headerTitle:"PHIẾU QUÀ TẶNG", headerShown:true}}/>
               </Stack.Navigator>
           </NavigationContainer>
       </Provider>
