@@ -1,7 +1,12 @@
 import {Image, StyleSheet, Text, View} from "react-native";
+import Barcode from 'react-native-barcode-svg';
+import {useState} from "react";
+import {useSelector} from "react-redux";
 
 
 export default function MyId({navigation}){
+    const user = useSelector((state)=>state.user)
+    console.log(user)
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
@@ -11,11 +16,12 @@ export default function MyId({navigation}){
                 <View style={styles.idBorder}>
                     <View style={{flexDirection:'row', marginHorizontal:10, marginBottom:5}}>
                         <Image source={require("../assets/MyId/logo.png")} style={{width:20, height:20, marginRight:5}}/>
+
                         <Text style={{fontWeight:"bold", fontSize:15, color:'#008CD7'}}>FamilyMart</Text>
                     </View>
                     <View style={{backgroundColor:'#00A040', width:'100%', height:15}}></View>
                     <View style={{justifyContent:'center', alignItems:'center', paddingVertical:10}}>
-                        <Image source={require("../assets/Barcode/barcode.png")} style={{width:200, height:80}}/>
+                        <Barcode value={user.phone} format="CODE128" maxWidth={200} height={60}/>
                     </View>
                     <View style={{position:'absolute',backgroundColor:'#008CD7', width:'100%', height:15, top:134, borderBottomLeftRadius:10, borderBottomRightRadius:10, }}></View>
                 </View>
@@ -47,7 +53,9 @@ export default function MyId({navigation}){
                     <Text style={styles.textPay}>ShopeePay</Text>
                 </View>
             </View>
-            <View style={{flex:1}}></View>
+            <View style={{flex:1}}>
+                <Text></Text>
+            </View>
         </View>
     )
 }

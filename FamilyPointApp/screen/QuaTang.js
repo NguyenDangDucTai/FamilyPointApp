@@ -4,13 +4,17 @@ import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import filter from 'lodash.filter'
 import Modal from "react-native-modal";
+import Barcode from "react-native-barcode-svg";
 
 
 export default function QuaTang({navigation}){
     const [isModalVisible, setModalVisible] = useState(false)
+    const user = useSelector((state)=>state.user)
+    const [code, setCode] = useState("")
 
-    const toggleModal = () => {
+    const toggleModal = (codeId) => {
         setModalVisible(!isModalVisible)
+        // setCode(codeId)
     }
     
     const [dataCH, setDataCH] = useState(useSelector((state) =>state.dataQTCH));
@@ -52,7 +56,8 @@ export default function QuaTang({navigation}){
                                 Mã thành viên
                             </Text>
                         </View>
-                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
+                        <Barcode value={user.phone} format="CODE128" maxWidth={200} height={60}/>
+                        <Text style={{marginVertical:5, fontSize:18}}>{user.phone}</Text>
                     </View>
                     <View style={styles.boxBarcode}>
                         <View style={styles.titleBackground2}>
@@ -60,7 +65,8 @@ export default function QuaTang({navigation}){
                                 Mã phiếu quà tặng
                             </Text>
                         </View>
-                        <Image source={require('../assets/Barcode/barcode.png')} style={{width:200, height:90, marginTop:10}}/>
+                        <Barcode value={code} format="CODE128" maxWidth={200} height={60}/>
+                        <Text style={{marginVertical:5, fontSize:18}}>{code}</Text>
                     </View>
                 </View>
             </Modal>
@@ -136,7 +142,10 @@ export default function QuaTang({navigation}){
                                             { isVisibleSD &&(
                                                 <View>
                                                     <TouchableOpacity style={{backgroundColor:'#008CD7', borderRadius:20, width:50, height:35, alignSelf:'center', justifyContent:'center', alignItems:'center'}}
-                                                                      onPress={toggleModal}
+                                                                      onPress={()=>{
+                                                                          setModalVisible(!isModalVisible)
+                                                                          setCode(item.id)
+                                                                      }}
 
                                                     >
                                                         <Text style={{color:'white', fontWeight:'bold', fontSize:8}}>Sử dụng</Text>
@@ -311,7 +320,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius:20,
         borderTopLeftRadius:20,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginVertical:5,
     },
     titleBackground2:{
         backgroundColor:"#08B404",
@@ -320,6 +330,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius:20,
         borderTopLeftRadius:20,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginVertical:5,
     },
 })

@@ -93,6 +93,7 @@ export default function App(){
                   <Stack.Screen name='HoTro' component={HoTro} options={{ headerShown: false }}/>
                   <Stack.Screen name='CaiDat' component={CaiDat} options={{ headerShown: false }}/>
                   <Stack.Screen name='QuaTang' component={QuaTang} options={{ headerShown: false }}/>
+                  <Stack.Screen name='MyId' component={MyId} options={{ headerShown: false }}/>
                   <Stack.Screen name='PhieuQuaTang' component={PhieuQuaTang} options={{ headerTitle:"PHIẾU QUÀ TẶNG", headerShown:true}}/>
               </Stack.Navigator>
           </NavigationContainer>
