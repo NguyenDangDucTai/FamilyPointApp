@@ -43,7 +43,7 @@ export default function HoTro({navigation}){
                             hợp đặc biệt, chúng tôi sẽ liên hệ trực tiếp qua điện thoại.
                         </Text>
                         <TouchableOpacity style={styles.btnDatCauHoi}
-                                          onPress={()=>{}}
+                                          onPress={()=>{navigation.navigate("DatCauHoi")}}
                         >
                             <Text style={{color:'white'}}>Đặt câu hỏi</Text>
                         </TouchableOpacity>

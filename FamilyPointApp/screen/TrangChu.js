@@ -83,31 +83,7 @@ export default function TrangChu({ route, navigation }) {
             console.error("Lỗi khi tải dữ liệu:", error);
         }
     };
-    //   useEffect(() => {
-    //     const unsubscribe = navigation.addListener(
-    //       "focus",
-    //       () => {
-    //         loadData();
-    //       },
-    //       [userPhone]
-    //     );
-    //     return unsubscribe;
-    //   }, [navigation]);
-
-    // const handleUpdate = async () => {
-    //     // Perform your update logic here (replace the comment with your actual update logic)
-    //     // For example, you might have an API call to update user data
-    //     // await updateUserData(user.id, updatedData);
-
-    //     // After the update, fetch the updated data
-    //     setRefreshing(true); // Set refreshing state to true to show a loading indicator
-    //     try {
-    //         await loadData();
-    //     } finally {
-    //         setRefreshing(false); // Set refreshing state back to false
-    //     }
-    // };
-
+    
     return (
         <View style={styles.container}>
             <View style={styles.title}>
