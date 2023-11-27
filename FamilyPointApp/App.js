@@ -19,6 +19,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Provider} from "react-redux";
 import store from "./redux/store";
+import DatCauHoi from './screen/DatCauHoi';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -91,6 +92,7 @@ export default function App(){
                   <Stack.Screen name='DoiMaPin' component={DoiMaPin} options={{ headerShown: false }}/>
                   <Stack.Screen name='ThongTinCaNhan' component={ThongTinCaNhan} options={{ headerShown: false }}/>
                   <Stack.Screen name='HoTro' component={HoTro} options={{ headerShown: false }}/>
+                  <Stack.Screen name='DatCauHoi' component={DatCauHoi} options={{ headerShown: false }}/>
                   <Stack.Screen name='CaiDat' component={CaiDat} options={{ headerShown: false }}/>
                   <Stack.Screen name='QuaTang' component={QuaTang} options={{ headerShown: false }}/>
                   <Stack.Screen name='MyId' component={MyId} options={{ headerShown: false }}/>
