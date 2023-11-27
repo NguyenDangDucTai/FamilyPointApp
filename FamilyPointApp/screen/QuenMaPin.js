@@ -3,13 +3,83 @@ import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity } from 'reac
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from "react-native-vector-icons/FontAwesome";
+import React, { useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 
 export default function QuenMaPin({ navigation }) {
+    const [phone, setPhone] = useState("");
+    const userPhone = useSelector((state) => state.phone);
+    const [user, setUser] = useState({
+        id: "",
+        password: "",
+        // ... other fields
+    });
+    const MKMD = "123456";
+    const [checkPhone, setCheckPhone] = useState(false);
+
+
+    const isVietnamesePhoneNumber = (phoneNumber) => {
+        const regex = /^(0[1-9][0-9]{8})$/;
+        return regex.test(phoneNumber);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://656047f683aba11d99d086dc.mockapi.io/users");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+                const data = await response.json();
+                const userData = data.find((userData) => userData.phone === userPhone);
+
+                if (userData) {
+                    setUser(userData);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, [userPhone]);
+
+    // const updatedUser = { ...user, password: MKMD };
+    // console.log(updatedUser);
+
+    const updateUserData = async () => {
+        try {
+            if (!isVietnamesePhoneNumber(phone)) {
+                setCheckPhone(true);
+                return;
+            }
+            const updatedUser = { ...user, password: MKMD };
+            const response = await fetch(`https://656047f683aba11d99d086dc.mockapi.io/users/${user.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedUser),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const updatedUserData = await response.json();
+            setUser(updatedUser);
+        } catch (error) {
+            console.error("Error updating user data:", error);
+        }
+        navigation.navigate("Login")
+    };
+
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.btnBack}
-                                  onPress={()=>{navigation.navigate("Login")}}
+                    onPress={() => { navigation.navigate("Login") }}
                 >
                     <Icon name='arrow-left' size={30} color='white' />
                 </TouchableOpacity>
@@ -24,12 +94,14 @@ export default function QuenMaPin({ navigation }) {
                     />
                     <Text style={styles.textTitle}>Thông tin số điện thoại</Text>
                 </View>
-            
+
                 <View style={styles.viewInput}>
                     <Text style={styles.textTitle2}>Số điện thoại*</Text>
-                    <TextInput style={styles.textInput}></TextInput>
+                    <TextInput style={styles.textInput}
+                        onChangeText={(text) => setPhone(text)}>
+                    </TextInput>
                 </View>
-        
+
             </View>
             <View style={styles.footer}>
                 <TouchableOpacity style={styles.btnCancel}>
@@ -38,9 +110,11 @@ export default function QuenMaPin({ navigation }) {
                     />
                     <Text style={styles.textCancel}>Hủy bỏ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnXacNhan}>
+                <TouchableOpacity style={styles.btnXacNhan}
+                    onPress={updateUserData}>
                     <Text style={styles.textXacNhan}>Xác nhận</Text>
                 </TouchableOpacity>
+                {checkPhone ? <Text style={styles.exception}>Số điện thoại không hợp lệ!</Text> : null}
             </View>
         </View>
     );
@@ -67,7 +141,7 @@ const styles = StyleSheet.create({
         width: '50px',
         position: 'absolute',
         top: 28,
-        zIndex:10,
+        zIndex: 10,
     },
     textQuenMaPin: {
         fontSize: 25,
@@ -135,8 +209,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         height: '30%',
-        width:'25%',
-        padding:10,
+        width: '25%',
+        padding: 10,
     },
     imgCancel: {
         height: 20,
@@ -157,7 +231,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    
+
     },
     textXacNhan: {
         fontSize: 18,
@@ -165,5 +239,11 @@ const styles = StyleSheet.create({
         fontStyle: 'Open Sans',
         color: '#000'
     },
+    exception: {
+        top: 10,
+        color: 'red',
+        fontWeight: '500',
+        fontStyle: 'Epilogue',
+    }
 
 });
