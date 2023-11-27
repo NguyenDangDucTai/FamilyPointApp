@@ -19,6 +19,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Provider} from "react-redux";
 import store from "./redux/store";
+import DetailKhuyenMai from "./screen/DetailKhuyenMai";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -94,7 +95,8 @@ export default function App(){
                   <Stack.Screen name='CaiDat' component={CaiDat} options={{ headerShown: false }}/>
                   <Stack.Screen name='QuaTang' component={QuaTang} options={{ headerShown: false }}/>
                   <Stack.Screen name='MyId' component={MyId} options={{ headerShown: false }}/>
-                  <Stack.Screen name='PhieuQuaTang' component={PhieuQuaTang} options={{ headerTitle:"PHIẾU QUÀ TẶNG", headerShown:true}}/>
+                  <Stack.Screen name='PhieuQuaTang' component={PhieuQuaTang} options={{ headerTitle:"PHIẾU QUÀ TẶNG", headerTitleAlign:'center'}}/>
+                  <Stack.Screen name="DetailKhuyenMai" component={DetailKhuyenMai} options={{headerTitle:"CHI TIẾT KHUYẾN MÃI", headerTitleAlign:'center'}}/>
               </Stack.Navigator>
           </NavigationContainer>
       </Provider>

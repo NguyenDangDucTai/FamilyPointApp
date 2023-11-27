@@ -2,6 +2,7 @@ import {FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} fr
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {useState} from "react";
 import {useSelector} from "react-redux";
+import filter from "lodash.filter";
 
 
 
@@ -15,6 +16,25 @@ export default function KhuyenMai({navigation}){
     const [btn1, setbtn1] = useState(true)
     const [btn2, setbtn2] = useState(false)
     const [DATA, setDATA] = useState(dataConHan)
+    const [fulldata, setFullData] = useState(DATA);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearch = (query)=> {
+        setSearchQuery(query);
+        const formattedQuery = query.toString();
+        const filterData = filter(fulldata, (user)=>{
+            return contains(user, formattedQuery);
+        });
+        setDATA(filterData);
+    }
+
+    const contains = ({name}, query) =>{
+        if(name.includes(query))
+            return true;
+        return false;
+    }
+
+
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
@@ -22,8 +42,12 @@ export default function KhuyenMai({navigation}){
                 <View style={styles.searchBar}>
                     <Icon name="search" size={25} color='black'/>
                     <TextInput
-                        placeholder="Tìm ưu đãi"
+                        placeholder="Tìm khuyễn mãi"
                         placeholderTextColor='silver'
+                        clearButtonMode={"always"}
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        onChangeText={(query)=> handleSearch(query)}
                         style={styles.textinputSearch}
                     />
                 </View>
@@ -59,7 +83,11 @@ export default function KhuyenMai({navigation}){
                     data={DATA}
                     renderItem={({item})=>{
                         return(
-                            <View style={styles.voucher}>
+                            <TouchableOpacity style={styles.voucher}
+                                              onPress={()=>{
+                                                  navigation.navigate("DetailKhuyenMai", {item: item})
+                                              }}
+                            >
                                 <View style={{justifyContent:'center'}}>
                                     <Image
                                         source={require('../assets/ThuThach/imgVoucher_01.png')}
@@ -76,7 +104,7 @@ export default function KhuyenMai({navigation}){
                                         </Text>
                                     </View>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         )
                     }}/>
             </View>
