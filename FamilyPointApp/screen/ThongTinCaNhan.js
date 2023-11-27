@@ -4,12 +4,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState, useEffect, useCallback } from "react";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function ThongTinCaNhan({ navigation, route }) {
 
+    const [checkPhone, setCheckPhone] = useState(false);
+    const [checkBirthday, setCheckBirthday] = useState(false);
+    const [checkEmptyFields, setCheckEmptyFields] = useState(false);
+
     const [data, setData] = useState([]);
-    const userPhone = useSelector((state)=>state.phone);
+    const userPhone = useSelector((state) => state.phone);
     const [user, setUser] = useState({
         id: "",
         name: "",
@@ -52,8 +56,37 @@ export default function ThongTinCaNhan({ navigation, route }) {
         fetchData();
     }, [userPhone]);
 
+    const isVietnamesePhoneNumber = (phoneNumber) => {
+        const regex = /^(0[1-9][0-9]{8})$/;
+        return regex.test(phoneNumber);
+    };
+
+    const isDateFormatValid = (dateString) => {
+        const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+        return regex.test(dateString);
+    };
+
     const updateUserData = async () => {
         try {
+            if (
+                user.name.trim() === "" ||
+                user.phone.trim() === "" ||
+                user.sex.trim() === "" ||
+                user.birthday.trim() === "" ||
+                user.country.trim() === "" ||
+                user.address.trim() === ""
+            ) {
+                setCheckEmptyFields(true);
+                return;
+            }
+            if (!isVietnamesePhoneNumber(user.phone)) {
+                setCheckPhone(true);
+                return;
+            }
+            if (!isDateFormatValid(user.birthday)) {
+                setCheckBirthday(true);
+                return;
+            }
             const response = await fetch(`https://656047f683aba11d99d086dc.mockapi.io/users/${user.id}`, {
                 method: "PUT",
                 headers: {
@@ -78,9 +111,9 @@ export default function ThongTinCaNhan({ navigation, route }) {
         <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.btnBack}
-                                  onPress={()=>{
-                                      navigation.navigate("Home");
-                                  }}
+                    onPress={() => {
+                        navigation.navigate("Home");
+                    }}
                 >
                     <Icon name='arrow-left' size={30} color='white' />
                 </TouchableOpacity>
@@ -90,12 +123,12 @@ export default function ThongTinCaNhan({ navigation, route }) {
             </View>
             <View style={styles.body}>
                 <View style={styles.viewTitle}>
-                    <Image  source={{ uri: data?.avatar }}
+                    <Image source={{ uri: data?.avatar }}
                         style={styles.imgAvata}
                     />
                 </View>
                 <TouchableOpacity style={styles.btnDoiMaPin}
-                    onPress={() => navigation.navigate("DoiMaPin",{ userPhone: userPhone })}>
+                    onPress={() => navigation.navigate("DoiMaPin", { userPhone: userPhone })}>
                     <Image source={require('../assets/ThongTinCaNhan/image 18.png')}
                         style={styles.imgLock}
                     />
@@ -139,17 +172,15 @@ export default function ThongTinCaNhan({ navigation, route }) {
                 </View>
             </View>
             <View style={styles.footer}>
-                <TouchableOpacity style={styles.btnCancel}
-                    onPress={() => navigation.navigate("Home", { userPhone: userPhone })}>
-                    <Image source={require('../assets/ThongTinCaNhan/cancel.png')}
-                        style={styles.imgCancel}
-                    />
-                    <Text style={styles.textCancel}>Hủy bỏ</Text>
-                </TouchableOpacity>
                 <TouchableOpacity style={styles.btnCapNhat}
                     onPress={updateUserData}>
                     <Text style={styles.textCapNhat}>Cập nhật</Text>
                 </TouchableOpacity>
+                <View style={styles.errorContainer}>
+                    {checkEmptyFields ? <Text style={styles.exception}>Vui lòng điền đầy đủ thông tin!</Text> : null}
+                    {checkPhone ? <Text style={styles.exception}>Số điện thoại không hợp lệ!</Text> : null}
+                    {checkBirthday ? <Text style={styles.exception}>Ngày sinh không hợp lệ! (dd/MM/yyyy)</Text> : null}
+                </View>
             </View>
         </View>
     );
@@ -173,7 +204,7 @@ const styles = StyleSheet.create({
         height: '13%',
     },
     btnBack: {
-        zIndex:10,
+        zIndex: 10,
         width: '50px',
         position: 'absolute',
         top: 28
@@ -212,7 +243,7 @@ const styles = StyleSheet.create({
         height: 70,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         backgroundColor: '#D9D9D9',
         borderRadius: 100,
     },
@@ -280,13 +311,22 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 10
+        marginVertical: 5
     },
     textCapNhat: {
         fontSize: 18,
         fontWeight: 'bold',
         fontStyle: 'Open Sans',
         color: '#fff'
+    },
+    exception: {
+        top: 0,
+        color: 'red',
+        fontWeight: '500',
+        fontStyle: 'Epilogue',
+    },
+    errorContainer: {
+        alignItems: 'center',
     },
 
 });
