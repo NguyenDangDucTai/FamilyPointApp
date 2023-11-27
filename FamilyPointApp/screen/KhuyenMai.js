@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 
 
 
-export default function ThuThach({navigation}){
+export default function KhuyenMai({navigation}){
     const dataConHan = useSelector((state)=>state.dataTTCH)
     const dataHetHan = useSelector((state)=>state.dataTTHH)
 
@@ -18,7 +18,7 @@ export default function ThuThach({navigation}){
     return(
         <View style={styles.container}>
             <View style={styles.body1}>
-                <Text style={styles.textBody1}>THỬ THÁCH</Text>
+                <Text style={styles.textBody1}>KHUYẾN MÃI</Text>
                 <View style={styles.searchBar}>
                     <Icon name="search" size={25} color='black'/>
                     <TextInput

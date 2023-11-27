@@ -7,7 +7,7 @@ import PhieuQuaTang from "./screen/PhieuQuaTang";
 import CaiDat from "./screen/CaiDat";
 import HoTro from "./screen/HoTro";
 import MyId from "./screen/MyId";
-import ThuThach from "./screen/Thử thách";
+import KhuyenMai from "./screen/KhuyenMai";
 import LichSuDiem from "./screen/LichSuDiem";
 import ThongBao from "./screen/ThongBao";
 import DangKy from './screen/DangKy';
@@ -35,10 +35,10 @@ const TabMain =()=>{
                             ),
                         }}
             />
-            <Tab.Screen name="ThuThach" component={ThuThach}
+            <Tab.Screen name="KhuyenMai" component={KhuyenMai}
                         options={{
                             headerShown: false,
-                            tabBarLabel:'Thách thức',
+                            tabBarLabel:'Khuyến Mãi',
                             tabBarIcon:({color, size})=>(
                                 <MaterialCommunityIcons name='flag' color={color} size={size}/>
                             ),
